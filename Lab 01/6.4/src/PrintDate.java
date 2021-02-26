@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class PrintDate {
-	public static int month;
-	public static int year;
+	public static int month = 0;
+	public static int year = -1;
 	
 	static void inputMonth() {
 		Scanner sc = new Scanner(System.in);
@@ -57,17 +57,21 @@ public class PrintDate {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter year:");
 		String yearInput = input.nextLine();
-		try {
-			int yearNumber = Integer.parseInt(yearInput);
-			if (year < 0) {
+	
+	
+		for(int i=0; i<yearInput.length(); ++i)
+		{
+			if (yearInput.charAt(i) < '0' || yearInput.charAt(i) > '9') {
+				year = -1;
 				System.out.println("Invalid");
 				return;
 			}
-			year = yearNumber;
-		} catch (Exception e) {
-			System.out.println("Invalid");
-			year = -1;
 		}
+		int yearNumber = Integer.parseInt(yearInput);
+		System.out.println(yearNumber);
+		year = yearNumber;
+		
+
 		
 	}
 	
@@ -93,13 +97,13 @@ public class PrintDate {
 	}
 	
 	public static void main(String[] args) {
-		inputMonth();
-		if (month != 0) {
-			inputYear();
-			if (year != -1)
-			{
-				printDate();
-			}
+		while(month == 0) {
+			inputMonth();
 		}
+		while(year == -1) {
+			inputYear();
+		}
+		System.out.print(month+ " "+year);
+		printDate();
 	}
 }
