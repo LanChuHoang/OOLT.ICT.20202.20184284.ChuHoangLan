@@ -27,17 +27,17 @@ public class EquationSolver {
 		
 		System.out.println("Linear system with 2 variables");
 		System.out.println("Enter a1: ");
-		int a1 = input.nextInt();
+		double a1 = input.nextDouble();
 		System.out.println("Enter b1: ");
-		int b1 = input.nextInt();
+		double b1 = input.nextDouble();
 		System.out.println("Enter c1: ");
-		int c1 = input.nextInt();
+		double c1 = input.nextDouble();
 		System.out.println("Enter a2: ");
-		int a2 = input.nextInt();
+		double a2 = input.nextDouble();
 		System.out.println("Enter b2: ");
-		int b2 = input.nextInt();
+		double b2 = input.nextDouble();
 		System.out.println("Enter c2: ");
-		int c2 = input.nextInt();
+		double c2 = input.nextDouble();
 		
 		// Solve
 		double a1DivA2 = (double)a1/(double)a2;
@@ -77,7 +77,7 @@ public class EquationSolver {
 			double delta = b * b - a * c * 4;
 			if (delta == 0) {
 				System.out.println("The equation has an unique solution");
-				double x = -b/2*a;
+				double x = -b/(2*a);
 				System.out.println("x = " + x);
 			} else if (delta > 0) {
 				System.out.println("The equation has 2 solutions");
@@ -96,7 +96,7 @@ public class EquationSolver {
 		
 		System.out.println("1. a*x + b = c");
 		System.out.println("2. a1*x + b1*y = c1 & a2*x + b2*y = c2");
-		System.out.println("1. a*x^2 + b*x + c = 0");
+		System.out.println("3. a*x^2 + b*x + c = 0");
 		System.out.println("Your choice: ");
 		
 		int chosen = input.nextInt();
@@ -110,7 +110,7 @@ public class EquationSolver {
 		case 3:
 			twoDegree();
 			break;
-			default: 
+		default: 
 				System.out.println("Invalid");
 		}
 		
