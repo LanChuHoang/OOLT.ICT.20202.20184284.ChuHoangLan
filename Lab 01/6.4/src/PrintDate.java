@@ -58,7 +58,6 @@ public class PrintDate {
 		System.out.println("Enter year:");
 		String yearInput = input.nextLine();
 	
-	
 		for(int i=0; i<yearInput.length(); ++i)
 		{
 			if (yearInput.charAt(i) < '0' || yearInput.charAt(i) > '9') {
@@ -68,11 +67,7 @@ public class PrintDate {
 			}
 		}
 		int yearNumber = Integer.parseInt(yearInput);
-		System.out.println(yearNumber);
 		year = yearNumber;
-		
-
-		
 	}
 	
 	static void printDate() {
@@ -103,7 +98,6 @@ public class PrintDate {
 		while(year == -1) {
 			inputYear();
 		}
-		System.out.print(month+ " "+year);
 		printDate();
 	}
 }
