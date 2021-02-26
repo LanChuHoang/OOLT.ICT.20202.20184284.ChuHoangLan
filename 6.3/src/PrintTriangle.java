@@ -19,10 +19,6 @@ public class PrintTriangle {
 				for (int j = 1; j <= numStar; ++j) {
 					System.out.print("*");
 				}
-				// Print spaces
-				for (int j = 1; j <= (maxStar - numStar) / 2; j++) {
-					System.out.print(" ");	
-				}
 				System.out.print("\n");
 			}
 		}
