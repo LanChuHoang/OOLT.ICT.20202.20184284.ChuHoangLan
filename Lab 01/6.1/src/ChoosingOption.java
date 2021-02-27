@@ -6,6 +6,7 @@ public class ChoosingOption {
 		
 		
 		// Answer2: Customize the options
+		// Use the showOptionDialog and pass the options array to the method to customize the text and the number of options
 		String[] options = new String[] {"I do", "I don't"};
 	    int response = JOptionPane.showOptionDialog(null, "Message", "Title",
 	        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
