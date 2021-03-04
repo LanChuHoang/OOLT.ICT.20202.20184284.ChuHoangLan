@@ -13,6 +13,9 @@ public class ChoosingOption {
 	        null, options, options[0]);
 	    JOptionPane.showMessageDialog(null, "You have chosen: " + (response == JOptionPane.YES_OPTION? "I do" : "I dont't"));
 	    System.exit(0);
+	    
+	    
+	    
 		
 	}
 }
