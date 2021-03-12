@@ -15,13 +15,13 @@ public class Aims {
 		anOdrder.addDigitalVideoDisc(dvd3);
 		
 		// Print total cost
-		System.out.println("The total cost is: ");
-		System.out.println(anOdrder.totalCost());
-		
+		System.out.println("The total cost is: " + anOdrder.totalCost());
 		anOdrder.printCart();
 		System.out.println();
 		
 		anOdrder.removeDigitalVideoDisc(dvd3);
+		anOdrder.printCart();
+		System.out.println();
 	}
 
 }

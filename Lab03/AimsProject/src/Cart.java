@@ -1,11 +1,12 @@
 import java.util.Iterator;
 
 public class Cart {
-	public static final int MAX_NUMBERS_ORDERED = 20;
+	public static final int MAX_NUMBERS_ORDERED = 3;
 	private DigitalVideoDisc itemsOrdered[] = new DigitalVideoDisc[MAX_NUMBERS_ORDERED];
 	int qtyOrdered;
 	
 	public void printCart() {
+		System.out.println("- Your cart:");
 		if (qtyOrdered <= 0) {
 			System.out.println("The cart is empty");
 		} else {
@@ -24,22 +25,26 @@ public class Cart {
 		if (qtyOrdered < MAX_NUMBERS_ORDERED) {
 			itemsOrdered[qtyOrdered] = disc;
 			qtyOrdered++;
-			System.out.println("The disc has been added successfully.");
+			System.out.println("The disc has been added successfully. You can use printCart method to view the result.");
 		} else {
 			System.out.println("The cart is full. Please remove some items to add new one");
 		}
 	}
 	
-	public DigitalVideoDisc searchDVD(DigitalVideoDisc disc) {
+	public void removeDigitalVideoDisc(DigitalVideoDisc disc) {
 		for(int i = 0; i < qtyOrdered; ++i) {
-			if (itemsOrdered[i] == disc) {
-				return itemsOrdered[i];
+			if(itemsOrdered[i] == disc) {
+				for(int j = i; j < qtyOrdered; ++j) {
+					if(j+1 < qtyOrdered) {
+						itemsOrdered[j] = itemsOrdered[j+1];
+					}
+				}
+				qtyOrdered--;
+				System.out.println("The disc has been removed successfully.  You can use printCart method to view the result.");
+				return;
 			}
 		}
-		return null;
-	}
-	
-	public void removeDigitalVideoDisc(DigitalVideoDisc disc) {
+		System.out.println("Cannot found the disc");
 	}
 	
 	public float totalCost() {
