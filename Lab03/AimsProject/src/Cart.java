@@ -40,7 +40,6 @@ public class Cart {
 	}
 	
 	public void removeDigitalVideoDisc(DigitalVideoDisc disc) {
-		
 	}
 	
 	public float totalCost() {
