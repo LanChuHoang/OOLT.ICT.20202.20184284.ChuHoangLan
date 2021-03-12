@@ -1,9 +1,9 @@
-import java.util.Iterator;
+
 
 public class Cart {
-	public static final int MAX_NUMBERS_ORDERED = 3;
+	public static final int MAX_NUMBERS_ORDERED = 20;
 	private DigitalVideoDisc itemsOrdered[] = new DigitalVideoDisc[MAX_NUMBERS_ORDERED];
-	int qtyOrdered;
+	private int qtyOrdered;
 	
 	public void printCart() {
 		System.out.println("- Your cart:");
