@@ -1,3 +1,4 @@
+package hust.soict.globalict.aims.disc;
 import java.time.LocalDate;
 
 public class DigitalVideoDisc {

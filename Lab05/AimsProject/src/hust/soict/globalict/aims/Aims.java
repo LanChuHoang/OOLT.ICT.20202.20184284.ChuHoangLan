@@ -1,5 +1,9 @@
+package hust.soict.globalict.aims;
 
-public class CartTest {
+import hust.soict.globalict.aims.cart.Cart;
+import hust.soict.globalict.aims.disc.DigitalVideoDisc;
+
+public class Aims {
 
 	public static void main(String[] args) {
 		// Create a new cart
@@ -9,27 +13,17 @@ public class CartTest {
 		DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
 		DigitalVideoDisc dvd2 = new DigitalVideoDisc("Star Wars", "Science Fiction", "George Lucas", 87, 24.95f);
 		DigitalVideoDisc dvd3 = new DigitalVideoDisc("Aladin", "Animation", "Roger Allers", 18.99f);
-		DigitalVideoDisc dvd4 = new DigitalVideoDisc("Harry Potter", "a", "a", 1, 0.1f);
-		DigitalVideoDisc dvd5 = new DigitalVideoDisc("Harry Potter", "a", "a", 2, 0.2f);
-		DigitalVideoDisc dvd6 = new DigitalVideoDisc("Harry Potter", "a", "a", 2, 0.3f);
 		
-		DigitalVideoDisc[] dvdList = {dvd1, dvd2, dvd3, dvd4, dvd5, dvd6};
+		DigitalVideoDisc[] dvdList = {dvd1, dvd2, dvd3};
 		
 		// Add DVDs to the cart
 		anOrder.addDigitalVideoDisc(dvdList);
+		// Using 
+		anOrder.addDigitalVideoDisc(dvd1, dvd2, dvd3);
+		anOrder.addDigitalVideoDisc(dvd1, dvd2);
 		
-		// Print
+		// Display the result
 		anOrder.printCart();
-		
-		// Sort
-		anOrder.sortByCostAndPrint();
-		anOrder.sortByTilteAndPrint();
-		anOrder.sortAndPrint();
-		
-		// Search
-		anOrder.searchByIDFor(6);
-		anOrder.searchByIDFor(0);
-
 	}
 
 }
