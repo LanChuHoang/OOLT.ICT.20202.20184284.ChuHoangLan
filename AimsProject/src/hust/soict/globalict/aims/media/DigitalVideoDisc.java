@@ -1,81 +1,59 @@
-package hust.soict.globalict.aims.disc;
+package hust.soict.globalict.aims.media;
 import java.time.LocalDate;
 
-public class DigitalVideoDisc {
-	private String title;
-	private String category;
+public class DigitalVideoDisc extends Media {
 	private String director;
 	private int length;
-	private float cost;
 	private LocalDate dateAdded;
+	private String title;
 	private static int numDVDCreated = 0; // nbDigitalVideoDiscs
-	private int id;
 	
 	// Getter
-	public String getTitle() {
-		return title;
-	}
-	public String getCategory() {
-		return category;
-	}
 	public String getDirector() {
 		return director;
 	}
 	public int getLength() {
 		return length;
 	}
-	public float getCost() {
-		return cost;
-	}
 	public LocalDate getDateAdded() {
 		return dateAdded;
 	}
-	public int getId() {
-		return id;
-	}
-	
 	public String getDetail() {
 		String result = "DVD\t";
-		result += title + " - ";
-		result += category + " - ";
+		result += getTitle() + " - ";
+		result += getCategory() + " - ";
 		result += director + " - ";
 		result += length + ": " + " - ";
-		result += cost + "$";
+		result += getCost() + "$";
 		result += " / ";
 		result += dateAdded + " - ";
-		result += "ID: " + id + " - ";
+		result += "ID: " + getId() + " - ";
 		result += numDVDCreated;
 		return result;
 	}
-	
 	public String getShortDetail() {
 		String shortDetail = new String();
-		shortDetail += id + " - ";
-		shortDetail += title + " by ";
+		shortDetail += getId() + " - ";
+		shortDetail += getTitle() + " by ";
 		shortDetail += director;
 		return shortDetail;
 	}
 	
-	// Setter
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
 	// Display content
 	public void printInfo() {
-		if(title != null) {
-			System.out.print(title + " - ");
+		if(getTitle() != null) {
+			System.out.print(getTitle() + " - ");
 		}
-		if(category != null) {
-			System.out.print(category + " - ");
+		if(getCategory() != null) {
+			System.out.print(getCategory() + " - ");
 		}
 		if(director != null) {
 			System.out.print(director + " - ");
 		}
 		System.out.print(length + " - ");
-		System.out.print(cost + " - ");
+		System.out.print(getCost() + " - ");
 		System.out.print(dateAdded + " - ");
-		System.out.print(id + " - ");
+		System.out.print(getId() + " - ");
 		System.out.print(numDVDCreated);
 		System.out.println();
 	}
@@ -83,52 +61,35 @@ public class DigitalVideoDisc {
 	// init
 	public DigitalVideoDisc(String title) {
 		super();
-		this.title = title;
+		super.setTitle(title);
 		this.dateAdded = LocalDate.now();
 		numDVDCreated++;
-		this.id = numDVDCreated;
+		super.setId(numDVDCreated);
 	}
 	
 	public DigitalVideoDisc(String title, String category, float cost) {
-		super();
-		this.title = title;
-		this.category = category;
-		this.cost = cost;
-		this.dateAdded = LocalDate.now();
-		numDVDCreated++;
-		this.id = numDVDCreated;
+		this(title);
+		super.setCategory(category);
+		super.setCost(cost);
 	}
 	
 	public DigitalVideoDisc(String title, String category, String director, float cost) {
-		super();
-		this.title = title;
-		this.category = category;
+		this(title, category, cost);
 		this.director = director;
-		this.cost = cost;
-		this.dateAdded = LocalDate.now();
-		numDVDCreated++;
-		this.id = numDVDCreated;
 	}
 	
 	public DigitalVideoDisc(String title, String category, String director, int length, float cost) {
-		super();
-		this.title = title;
-		this.category = category;
-		this.director = director;
+		this(title, category, director, cost);
 		this.length = length;
-		this.cost = cost;
-		this.dateAdded = LocalDate.now();
-		numDVDCreated++;
-		this.id = numDVDCreated;
 	} 
 	
 	// Others
 	public void copyContentOf(DigitalVideoDisc dvd) {
-		this.title = dvd.getTitle();
-		this.category = dvd.getCategory();
+		super.setTitle(dvd.getTitle());
+		super.setCategory(dvd.getCategory());
 		this.director = dvd.getDirector();
 		this.length = dvd.getLength();
-		this.cost = dvd.getCost();
+		super.setCost(dvd.getCost());
 	}
 	
 	// Checking
