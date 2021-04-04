@@ -1,39 +1,89 @@
 package hust.soict.globalict.aims.store;
 
+import java.util.ArrayList;
+
+import hust.soict.globalict.aims.media.Book;
 import hust.soict.globalict.aims.media.DigitalVideoDisc;
+import hust.soict.globalict.aims.media.Media;
 
 public class Store {
-	public static final int CAPACITY = 20;
-	public int numItems;
-	public DigitalVideoDisc[] itemsInStore = new DigitalVideoDisc[CAPACITY];
+	private ArrayList<Media> itemsInStore = new ArrayList<Media>();
 	
+	// Update
+	public void addMedia(Media...newMediaList) {
+		for (Media newMedia : newMediaList) {
+			if (newMedia == null) {
+				System.out.println("The new media is null");
+			} else {
+				itemsInStore.add(newMedia);
+				System.out.println("Added " + newMedia.getTitle() + " to the Store");
+			}
+		}
+	
+	}
+	
+	public void removeMedia(int id) {
+		for (Media item : itemsInStore) {
+			if(item.getId() == id) {
+				itemsInStore.remove(item);
+				System.out.println("Removed " + id + " from the Store");
+				return;
+			}
+		}
+		System.out.println("\tCannot Found");
+	}
+
+	// Display
+	public void printStore() {
+		if (itemsInStore.isEmpty()) {
+			System.out.println("\tThe Store is empty");
+		} else {
+			int i = 0;
+			for(Media item : itemsInStore) {
+				if (item instanceof DigitalVideoDisc) {
+					DigitalVideoDisc dvd = (DigitalVideoDisc)item;
+					System.out.println("\t" + (i+1) + ". " + dvd.getDetail());
+				} else if (item instanceof Book) {
+					Book book = (Book)item;
+					System.out.println("\t"+ (i+1) + ". " + book.getDetail());
+				} else {
+					System.out.println("\tDowncasting error");
+				}
+				i++;
+			}
+		}
+	}	
+		
 	// Checking
 	public boolean isEmpty() {
-		return numItems == 0;
+		return itemsInStore.size() == 0;
 	}
 	
-	public boolean isFull() {
-		return numItems == CAPACITY;
-	}
-	
-	public boolean isContains(DigitalVideoDisc dvd) {
-		String inputTitle = dvd.getTitle();
-		String inputDirector = dvd.getDirector();
-		for (int i = 0; i < numItems; ++i) {
-			String title = itemsInStore[i].getTitle();
-			String director = itemsInStore[i].getDirector();
-			if (title.equals(inputTitle) && director.equals(inputDirector)) {
-				return true;
+	public boolean contains(Media media) {
+		String inputTitle = media.getTitle();
+		if (media instanceof DigitalVideoDisc) {
+			for (Media item : itemsInStore) {
+				if (item instanceof DigitalVideoDisc && item.getTitle().equals(inputTitle)) {
+					return true;
+				}
 			}
+		} else if (media instanceof Book) {
+			for (Media item : itemsInStore) {
+				if (item instanceof Book && item.getTitle().equals(inputTitle)) {
+					return true;
+				}
+			}
+		} else {
+			System.out.println("Downcasting error");
 		}
 		return false;
 	}
 	
 	// Searching 
-	public DigitalVideoDisc searchByID(int id) {
-		for(int i = 0; i < numItems; ++i) {
-			if (itemsInStore[i].getId() == id) {
-				return itemsInStore[i];
+	public Media searchByID(int id) {
+		for(Media item : itemsInStore) {
+			if (item.getId() == id) {
+				return item;
 			}
 		}
 		return null;
@@ -43,50 +93,7 @@ public class Store {
 	//
 	//
 	
-	// Display
-	public void printStore() {
-		if (isEmpty()) {
-			System.out.println("\tThe store is empty");
-		} else {
-			System.out.println("Items in store: ");
-			System.out.println("--------------------------------------------");
-			for (int i = 0; i < numItems; ++i) {
-				System.out.println((i+1) + ".DVD: " + itemsInStore[i].getShortDetail());
-				
-			}
-			System.out.println("--------------------------------------------");
-		}
-	}
 	
-	// Update
-	public void addDVD(DigitalVideoDisc dvd) {
-		if (isFull()) {
-			System.out.println("\tThe store is full");
-		} else {
-			if (dvd == null) {
-				System.out.println("\tDVD input is null");
-			}
-			itemsInStore[numItems] = dvd;
-			numItems++;
-			System.out.println("Added " + itemsInStore[numItems - 1].getShortDetail());
-		}
-	}
 	
-	public void removeByID(int id) {
-		for(int i = 0; i < numItems; ++i) {
-			if (itemsInStore[i].getId() == id) {
-				String delDetail = itemsInStore[i].getShortDetail();
-				for (int j = i; j < numItems-1; ++j) {
-					itemsInStore[j] = itemsInStore[j+1];
-				}
-				itemsInStore[numItems] = null;
-				numItems--;
-				System.out.println("Deleted " + delDetail);
-				return;
-			}
-		}
-		// If no item matched
-		System.out.println("\tNot Found");
-	}
 	
 }

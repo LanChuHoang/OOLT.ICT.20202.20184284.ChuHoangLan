@@ -19,7 +19,7 @@ public class CartTest {
 		DigitalVideoDisc[] dvdList = {dvd1, dvd2, dvd3, dvd4, dvd5, dvd6};
 		
 		// Add DVDs to the cart
-		anOrder.addDigitalVideoDisc(dvdList);
+		anOrder.addMedia(dvdList);
 		
 		// Print
 		anOrder.printCart();
@@ -27,7 +27,7 @@ public class CartTest {
 		// Sort
 		anOrder.sortByCostAndPrint();
 		anOrder.sortByTilteAndPrint();
-		anOrder.sortAndPrint();
+		anOrder.sortByTitleAndCost();
 		
 		// Search
 		anOrder.searchByIDFor(6);

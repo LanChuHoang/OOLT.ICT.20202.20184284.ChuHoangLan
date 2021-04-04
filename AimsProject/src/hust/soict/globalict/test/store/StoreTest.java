@@ -12,10 +12,10 @@ public class StoreTest {
 		DigitalVideoDisc dvd3 = new DigitalVideoDisc("Aladin", "Animation", "Roger Allers", 18.99f);
 		
 		Store store = new Store();
-		store.addDVD(dvd1);
-		store.addDVD(dvd2);
-		store.addDVD(dvd3);
-		store.removeByID(4);
+		store.addMedia(dvd1);
+		store.addMedia(dvd2);
+		store.addMedia(dvd3);
+		store.removeMedia(4);
 		store.printStore();
 	}
 

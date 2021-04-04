@@ -18,7 +18,7 @@ public class DiskTest {
 		DigitalVideoDisc[] dvdList = {dvd1, dvd2, dvd3};
 		
 		// Add DVDs to the cart
-		anOrder.addDigitalVideoDisc(dvdList);
+		anOrder.addMedia(dvdList);
 		
 		// Test
 		String key = "lion";
