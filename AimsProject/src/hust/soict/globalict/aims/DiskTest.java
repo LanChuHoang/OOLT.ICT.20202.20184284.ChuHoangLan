@@ -1,7 +1,7 @@
 package hust.soict.globalict.aims;
 
 import hust.soict.globalict.aims.cart.Cart;
-import hust.soict.globalict.aims.media.DigitalVideoDisc;
+import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
 
 public class DiskTest {
 

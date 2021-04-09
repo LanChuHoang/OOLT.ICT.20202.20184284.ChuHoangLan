@@ -2,7 +2,7 @@ package hust.soict.globalict.aims.media;
 
 import java.time.LocalDate;
 
-public class Media {
+abstract public class Media {
 	public static int numMediaCreated = 0;
 	private int id;
 	private String title;
@@ -45,53 +45,29 @@ public class Media {
 		return false;	
 	}
 	
-	
-	
 	// Getter and setter
-	public int getId() {
-		return id;
+	public static int getNumMediaCreated() {
+		return numMediaCreated;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getId() {
+		return id;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getCategory() {
 		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 	public float getCost() {
 		return cost;
 	}
 
-	public void setCost(float cost) {
-		this.cost = cost;
-	}
-
 	public LocalDate getDateAdded() {
 		return dateAdded;
 	}
-
-	public void setDateAdded(LocalDate dateAdded) {
-		this.dateAdded = dateAdded;
-	}
-
-	public static int getNumMediaCreated() {
-		return numMediaCreated;
-	}
-	
-	
 
 }

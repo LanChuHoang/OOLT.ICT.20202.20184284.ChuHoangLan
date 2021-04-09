@@ -1,9 +1,9 @@
 package hust.soict.globalict.aims;
 
 import hust.soict.globalict.aims.cart.Cart;
-import hust.soict.globalict.aims.media.Book;
-import hust.soict.globalict.aims.media.DigitalVideoDisc;
 import hust.soict.globalict.aims.media.Media;
+import hust.soict.globalict.aims.media.book.Book;
+import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
 import hust.soict.globalict.aims.store.Store;
 
 import java.util.Scanner;

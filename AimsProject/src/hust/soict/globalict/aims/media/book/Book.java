@@ -1,11 +1,14 @@
-package hust.soict.globalict.aims.media;
+package hust.soict.globalict.aims.media.book;
 import java.util.ArrayList;  
 import java.util.List;
+
+import hust.soict.globalict.aims.media.Media;
 
 public class Book extends Media {
 	private List<String> authors = new ArrayList<String>();
 
 	public void copyContentOf(Book book) {
+		/*
 		super.setTitle(book.getTitle());
 		super.setCategory(book.getCategory());
 		for(String author : book.authors) {
@@ -15,6 +18,7 @@ public class Book extends Media {
 		super.setCost(book.getCost());
 		super.setId(book.getId());
 		super.setDateAdded(book.getDateAdded());
+		*/
 	}
 	
 	// Update
