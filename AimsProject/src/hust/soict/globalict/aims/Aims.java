@@ -38,6 +38,10 @@ public class Aims {
 		initializeDataTest(store);
 		
 		// Run the main menu
+		MemoryDaemon memoryDaemon = new MemoryDaemon();
+		Thread thread = new Thread(memoryDaemon);
+		thread.setDaemon(true);
+		thread.start();
 		mainMenu(store, cart);
 	}
 	
