@@ -3,8 +3,6 @@ package hust.soict.globalict.aims.store;
 import java.util.ArrayList;
 
 import hust.soict.globalict.aims.media.Media;
-import hust.soict.globalict.aims.media.book.Book;
-import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
 
 public class Store {
 	private ArrayList<Media> itemsInStore = new ArrayList<Media>();

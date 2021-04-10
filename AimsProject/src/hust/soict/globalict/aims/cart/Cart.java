@@ -2,9 +2,6 @@ package hust.soict.globalict.aims.cart;
 import java.util.ArrayList;
 
 import hust.soict.globalict.aims.media.Media;
-import hust.soict.globalict.aims.media.book.Book;
-import hust.soict.globalict.aims.media.disc.cd.CompactDisc;
-import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
 import hust.soict.globalict.aims.utils.MediaUtils;
 
 public class Cart {
@@ -68,15 +65,13 @@ public class Cart {
 		return itemsOrdered.size() >= MAX_NUMBERS_ORDERED;
 	}
 	
-	public void searchByIDFor(int id) {
-		System.out.println("Search for " + id);
+	public Media searchByID(int id) {
 		for(Media item : itemsOrdered) {
 			if (item.getId() == id) {
-				System.out.println(item.getDetail());
-				return;
+				return item;
 			}
 		}
-		System.out.println("Cannot found");
+		return null;
 	}
 	
 	public void searchByTitleFor(String key) {

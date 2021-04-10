@@ -30,8 +30,8 @@ public class CartTest {
 		anOrder.sortByTitleAndCost();
 		
 		// Search
-		anOrder.searchByIDFor(6);
-		anOrder.searchByIDFor(0);
+		anOrder.searchByID(6);
+		anOrder.searchByID(0);
 
 	}
 

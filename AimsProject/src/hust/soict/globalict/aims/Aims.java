@@ -1,7 +1,9 @@
 package hust.soict.globalict.aims;
 
 import hust.soict.globalict.aims.cart.Cart;
+import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
+import hust.soict.globalict.aims.media.Track;
 import hust.soict.globalict.aims.media.book.Book;
 import hust.soict.globalict.aims.media.disc.cd.CompactDisc;
 import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
@@ -10,11 +12,7 @@ import hust.soict.globalict.aims.store.Store;
 import java.util.Scanner;
 
 public class Aims {
-	
-	public static void main(String[] args) {
-		// Data test
-		Store store = new Store();
-		Cart cart = new Cart();
+	public static void initializeDataTest(Store store) {
 		// Create 6 new items
 		Book book1 = new Book("Harry Potter1", "Fantasy", 11.5f, "Author 5", "Author 6");
 		Book book2 = new Book("Harry Potter2", "Fantasy", 11.6f, "Author 3", "Author 4");
@@ -25,9 +23,19 @@ public class Aims {
 		CompactDisc cd1 = new CompactDisc("Album1", "Ballad", 10.5f, "Chullee", "artist1");
 		CompactDisc cd2 = new CompactDisc("Album2", "Ballad", 10.6f, "Chullee", "artist2");
 		CompactDisc cd3 = new CompactDisc("Album3", "Ballad", 10.7f, "Chullee", "artist3");
+		Track song1 = new Track("It's you", 333);
+		Track song2 = new Track("Better", 1173);
+		cd1.addTrack(song1, song2);
 		// Add the items to the store
 		Media[] newMedia = {book3, book2, book1, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
-		store.addMedia(newMedia);;
+		store.addMedia(newMedia);
+	}
+	
+	public static void main(String[] args) {
+		// Data test
+		Store store = new Store();
+		Cart cart = new Cart();
+		initializeDataTest(store);
 		
 		// Run the main menu
 		mainMenu(store, cart);
@@ -81,7 +89,8 @@ public class Aims {
 		System.out.println("Options: ");
 		System.out.println("1. View media's details");
 		System.out.println("2. Add media to cart");
-		System.out.println("3. See current cart");
+		System.out.println("3. Play an item");
+		System.out.println("4. See current cart");
 		System.out.println("0. Exit");
 		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("\tYour choice: ");
@@ -105,6 +114,18 @@ public class Aims {
 				break;
 			}
 			case '3': {
+				int chosenID = getInputID();
+				Media chosenItem = store.searchByID(chosenID);
+				if (chosenItem == null) {
+					System.out.println("Cannot found");
+				} else if (chosenItem instanceof Playable) {
+					((Playable) chosenItem).play();
+				} else {
+					System.out.println("This item is not playable");
+				}
+				break;
+			}
+			case '4': {
 				cartMenu(store, cart);
 				break;
 			}
@@ -276,8 +297,9 @@ public class Aims {
 		System.out.println("1. Filter items in cart");
 		System.out.println("2. Sort items in cart");
 		System.out.println("3. Remove an item from cart");
-		System.out.println("4. Get lucky item from cart");
-		System.out.println("5. Place order");
+		System.out.println("4. Play an item");
+		System.out.println("5. Get lucky item from cart");
+		System.out.println("6. Place order");
 		System.out.println("0. Exit");
 		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("\tYour choice: ");
@@ -306,10 +328,22 @@ public class Aims {
 				break;
 			}
 			case '4': {
-				cart.getLuckyItem();
+				int chosenID = getInputID();
+				Media chosenItem = cart.searchByID(chosenID);
+				if (chosenItem == null) {
+					System.out.println("Cannot found");
+				} else if (chosenItem instanceof Playable) {
+					((Playable) chosenItem).play();
+				} else {
+					System.out.println("This item is not playable");
+				}
 				break;
 			}
 			case '5': {
+				cart.getLuckyItem();
+				break;
+			}
+			case '6': {
 				System.out.println("Your order has been created");
 				cart.emptyCart();
 				break;
@@ -327,11 +361,16 @@ public class Aims {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("1. Filter by ID");
 		System.out.println("2. Filter by title");
-		char chosen = sc.next().charAt(0);
-		switch (chosen) {
+		char choice = sc.next().charAt(0);
+		switch (choice) {
 		case '1': {
 			int id = getInputID();
-			cart.searchByIDFor(id);
+			Media searchItem = cart.searchByID(id);
+			if(searchItem == null) {
+				System.out.println("Cannot found");
+			} else {
+				System.out.println(searchItem.getDetail());
+			}
 			break;
 		}
 		case '2': {

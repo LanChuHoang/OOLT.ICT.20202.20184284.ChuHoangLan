@@ -1,6 +1,5 @@
 package hust.soict.globalict.aims.media.disc;
 
-import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
 
 public class Disc extends Media{
