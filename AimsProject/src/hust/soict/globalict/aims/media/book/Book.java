@@ -75,12 +75,13 @@ public class Book extends Media {
 	}
 	
 	public String getDetail() {
-		String result = "\tBook - ";
-		result += "ID: " + getId() + " - ";
-		result += getTitle() + " - ";
-		result += "by " + getAuthorsString() + " - ";
-		result += getCost() + "$";
-		return result;
+		String header = "\tBook - ";
+		String detail = "";
+		detail += "ID: " + getId() + " - ";
+		detail += getTitle() + " - ";
+		detail += "by " + getAuthorsString() + " - ";
+		detail += getCost() + "$";
+		return header + detail;
 	}
 
 	public List<String> getAuthors() {

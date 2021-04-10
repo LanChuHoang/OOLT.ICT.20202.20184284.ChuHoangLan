@@ -4,25 +4,6 @@ import hust.soict.globalict.aims.media.disc.Disc;
 
 public class DigitalVideoDisc extends Disc {
 	
-	// Display content
-	public void printInfo() {
-		if(getTitle() != null) {
-			System.out.print(getTitle() + " - ");
-		}
-		if(getCategory() != null) {
-			System.out.print(getCategory() + " - ");
-		}
-		if(getDirector() != null) {
-			System.out.print(getDirector() + " - ");
-		}
-		System.out.print(getLength() + " - ");
-		System.out.print(getCost() + " - ");
-		System.out.print(getDateAdded() + " - ");
-		System.out.print(getId() + " - ");
-		System.out.print(getNumMediaCreated());
-		System.out.println();
-	}
-	
 	// Others
 	public void copyContentOf(DigitalVideoDisc dvd) {
 		/*
@@ -56,20 +37,9 @@ public class DigitalVideoDisc extends Disc {
 	// Getter
 
 	public String getDetail() {
-		String result = "\tDVD - ";
-		result += "ID: " + getId() + " - ";
-		result += getTitle() + " - ";
-		result += "by " + getDirector() + " - ";
-		result += getCost() + "$";
-		return result;
-	}
-	
-	public String getShortDetail() {
-		String shortDetail = new String();
-		shortDetail += getId() + " - ";
-		shortDetail += getTitle() + " by ";
-		shortDetail += getDirector();
-		return shortDetail;
+		String detail = super.getDetail();
+		String header = "\tDVD - ";
+		return header + detail;
 	}
 
 	

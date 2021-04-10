@@ -3,6 +3,7 @@ package hust.soict.globalict.aims;
 import hust.soict.globalict.aims.cart.Cart;
 import hust.soict.globalict.aims.media.Media;
 import hust.soict.globalict.aims.media.book.Book;
+import hust.soict.globalict.aims.media.disc.cd.CompactDisc;
 import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
 import hust.soict.globalict.aims.store.Store;
 
@@ -15,14 +16,17 @@ public class Aims {
 		Store store = new Store();
 		Cart cart = new Cart();
 		// Create 6 new items
+		Book book1 = new Book("Harry Potter1", "Fantasy", 11.5f, "Author 5", "Author 6");
+		Book book2 = new Book("Harry Potter2", "Fantasy", 11.6f, "Author 3", "Author 4");
+		Book book3 = new Book("Harry Potter3", "Fantasy", 11.7f, "Author 1", "Author 2");
 		DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
 		DigitalVideoDisc dvd2 = new DigitalVideoDisc("Star Wars", "Science Fiction", "George Lucas", 87, 24.95f);
 		DigitalVideoDisc dvd3 = new DigitalVideoDisc("Aladin", "Animation", "Roger Allers", 18.99f);
-		Book book3 = new Book("Harry Potter3", "Fantasy", 11.7f, "Author 1", "Author 2");
-		Book book2 = new Book("Harry Potter2", "Fantasy", 11.6f, "Author 3", "Author 4");
-		Book book1 = new Book("Harry Potter1", "Fantasy", 11.5f, "Author 5", "Author 6");
+		CompactDisc cd1 = new CompactDisc("Album1", "Ballad", 10.5f, "Chullee", "artist1");
+		CompactDisc cd2 = new CompactDisc("Album2", "Ballad", 10.6f, "Chullee", "artist2");
+		CompactDisc cd3 = new CompactDisc("Album3", "Ballad", 10.7f, "Chullee", "artist3");
 		// Add the items to the store
-		Media[] newMedia = {dvd3, dvd2, dvd1, book3, book2, book1}; 
+		Media[] newMedia = {book3, book2, book1, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
 		store.addMedia(newMedia);;
 		
 		// Run the main menu
@@ -42,13 +46,13 @@ public class Aims {
 	
 	public static void mainMenu(Store store, Cart cart) {
 		Scanner sc = new Scanner(System.in);
-		char chosen;
+		char choice;
 		do {
 			// Print Menu
 			printMainMenu();
 			// Check
-			chosen = sc.next().charAt(0);
-			switch (chosen) {
+			choice = sc.next().charAt(0);
+			switch (choice) {
 			case '1': {
 				storeMenu(store, cart);
 				break;
@@ -62,14 +66,12 @@ public class Aims {
 				break;
 			}
 			case '0': {
-				sc.close();
 				return;
 			}
 			default:
 				System.out.println("\tInvalid");
 			}
-		} while (chosen != '0');
-		sc.close();
+		} while (choice != '0');
 	}
 
 	// STORE MENU
@@ -87,13 +89,13 @@ public class Aims {
 	
 	public static void storeMenu(Store store, Cart cart) {
 		Scanner sc = new Scanner(System.in);
-		char chosen;
+		char choice;
 		do {
 			// Print Menu
 			printStoreMenu(store);
 			// Choice
-			chosen = sc.next().charAt(0);
-			switch (chosen) {
+			choice = sc.next().charAt(0);
+			switch (choice) {
 			case '1': {
 				addMediaFromStoreToCart(store, cart);
 				break;
@@ -112,31 +114,26 @@ public class Aims {
 			default:
 				System.out.println("\tInvalid");
 			}
-		} while(chosen != '0');
+		} while(choice != '0');
 	}
 	
 	public static void addMediaFromStoreToCart(Store store, Cart cart) {
 		Scanner sc = new Scanner(System.in);
-		// Search
+		// Search for the chosen item
 		int id = getInputID();
-		Media item = store.searchByID(id);
-		if (item == null) {
+		Media chosenItem = store.searchByID(id);
+		if (chosenItem == null) {
 			System.out.println("\tCannot found");
 		}
 		else {
-			if (item instanceof DigitalVideoDisc) {
-				System.out.println(((DigitalVideoDisc)item).getDetail());
-			} else if (item instanceof Book) {
-				System.out.println(((Book)item).getDetail());
-			} else {
-				System.out.println("\tDowncasting error");
-			}
-			//sc.nextLine();
-			System.out.println("Do you want to add this dvd to your cart (y/n): ");
-			char chosen = sc.next().charAt(0);
-			switch (chosen) {
+			// Print the found item
+			System.out.println(chosenItem.getDetail());
+			// Ask the user for adding the chosen item to the current cart
+			System.out.println("Do you want to add this item to your cart (y/n): ");
+			char userChoice = sc.next().charAt(0);
+			switch (userChoice) {
 			case 'y': {
-				cart.addMedia(item);
+				cart.addMedia(chosenItem);
 				break;
 			}
 			case 'n': {
@@ -148,13 +145,12 @@ public class Aims {
 		}
 	}
 	
-	// UPDATE MENU
+	// UPDATE STORE MENU
 	public static void printUpdateMenu() {
 		System.out.println("-------------------------------UPDATE STORE----------------------------");
 		System.out.println("Options: ");
-		System.out.println("1. Add a new dvd");
-		System.out.println("2. Add a new book");
-		System.out.println("3. Remove an item");
+		System.out.println("1. Add a new item");
+		System.out.println("2. Remove an item");
 		System.out.println("0. Exit");
 		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("\tYour choice: ");
@@ -162,36 +158,17 @@ public class Aims {
 	
 	public static void updateMenu(Store store, Cart cart) {
 		Scanner sc = new Scanner(System.in);
-		char chosen;
+		char choice;
 		do {
 			// Print Menu
 			printUpdateMenu();
 			// Choice
-			chosen = sc.next().charAt(0);
-			switch (chosen) {
+			choice = sc.next().charAt(0);
+			switch (choice) {
 			case '1': {
-				// Input
-				DigitalVideoDisc newDVD = getInputDVD();
-				// Search for duplicate
-				if (store.contains(newDVD)) {
-					System.out.println("The dvd is already in the store");
-				} else {
-					store.addMedia(newDVD);
-				}
-				break;
+				addNewMediaToStore(store);
 			}
 			case '2': {
-				// Input
-				Book newBook = getInputBook();
-				// Search for duplicate
-				if (store.contains(newBook)) {
-					System.out.println("The book is already in the store");
-				} else {
-					store.addMedia(newBook);
-				}
-				break;
-			}
-			case '3': {
 				int id = getInputID();
 				store.removeMedia(id);
 				break;
@@ -202,7 +179,93 @@ public class Aims {
 			default:
 				System.out.println("\tInvalid");
 			}
-		} while(chosen != '0');
+		} while(choice != '0');
+	}
+	
+	public static void addNewMediaToStore(Store store) {
+		Scanner sc = new Scanner(System.in);
+		char choice;
+		do {
+			// Print Menu
+			System.out.println("1. Book");
+			System.out.println("2. DVD");
+			System.out.println("3. CD");
+			System.out.println("0. Exit");
+			// Choice
+			choice = sc.next().charAt(0);
+			switch (choice) {
+			case '1': {
+				Book newBook = getInputBook();
+				store.addMedia(newBook);
+				break;
+			}
+			case '2': {
+				DigitalVideoDisc newDVD = getInputDVD();
+				store.addMedia(newDVD);
+				break;
+			}
+			case '3': {
+				CompactDisc newCD = getInputCD();
+				store.addMedia(newCD);
+				break;
+			}
+			case '0': {
+				break;
+			}
+			default:
+				System.out.println("\tInvalid");
+			}
+		} while(choice != '0');
+	}
+	
+	public static Book getInputBook() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter title");
+		String title = sc.nextLine();
+		System.out.println("Enter Category");
+		String category = sc.nextLine();
+		System.out.println("Enter Author");
+		String author = sc.nextLine();
+		System.out.println("Enter Cost");
+		float cost = sc.nextFloat();
+		// Create a new book
+		Book newBook = new Book(title, category, cost, author);
+		return newBook;
+	}
+	
+	public static DigitalVideoDisc getInputDVD() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter title");
+		String title = sc.nextLine();
+		System.out.println("Enter Category");
+		String category = sc.nextLine();
+		System.out.println("Enter Director");
+		String director = sc.nextLine();
+		System.out.println("Enter Length");
+		int length = sc.nextInt();
+		System.out.println("Enter Cost");
+		float cost = sc.nextFloat();
+		// Create a new DVD
+		DigitalVideoDisc newDVD = new DigitalVideoDisc(title, category, director, length, cost);
+		return newDVD;
+	}
+	
+	public static CompactDisc getInputCD() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter title");
+		String title = sc.nextLine();
+		System.out.println("Enter Category");
+		String category = sc.nextLine();
+		System.out.println("Enter Cost");
+		float cost = sc.nextFloat();
+		System.out.println("Enter Director");
+		String director = sc.nextLine();
+		System.out.println("Enter Artist");
+		String artist = sc.nextLine();
+		
+		// Create a new CD
+		CompactDisc newCD = new CompactDisc(title, category, cost, director, artist);
+		return newCD;
 	}
 	
 	// CART MENU
@@ -222,14 +285,13 @@ public class Aims {
 	
 	public static void cartMenu(Store store, Cart cart) {
 		Scanner sc = new Scanner(System.in);
-		char chosen;
+		char choice;
 		do {
 			// Print Menu
 			printCartMenu(cart);
 			// Choice
-			System.out.println("Your choice: ");
-			chosen = sc.next().charAt(0);
-			switch (chosen) {
+			choice = sc.next().charAt(0);
+			switch (choice) {
 			case '1': {
 				filterCartMenu(cart);
 				break;
@@ -258,7 +320,7 @@ public class Aims {
 			default:
 				System.out.println("\tInvalid");
 			}
-		} while(chosen != '0');
+		} while(choice != '0');
 	}
 	
 	public static void filterCartMenu(Cart cart) {
@@ -312,37 +374,5 @@ public class Aims {
 		int inputID = sc.nextInt();
 		return inputID;
 	}
-	
-	public static DigitalVideoDisc getInputDVD() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter title");
-		String title = sc.nextLine();
-		System.out.println("Enter Category");
-		String category = sc.nextLine();
-		System.out.println("Enter Directory");
-		String directory = sc.nextLine();
-		System.out.println("Enter Length");
-		int length = sc.nextInt();
-		System.out.println("Enter Cost");
-		float cost = sc.nextFloat();
-		// Create a new dvd
-		DigitalVideoDisc newDVD = new DigitalVideoDisc(title, category, directory, length, cost);
-		return newDVD;
-	}
-	
-	public static Book getInputBook() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter title");
-		String title = sc.nextLine();
-		System.out.println("Enter Category");
-		String category = sc.nextLine();
-		System.out.println("Enter Author");
-		String author = sc.nextLine();
-		System.out.println("Enter Cost");
-		float cost = sc.nextFloat();
-		// Create a new book
-		Book newBook = new Book(title, category, cost, author);
-		return newBook;
-	}
-	
+
 }

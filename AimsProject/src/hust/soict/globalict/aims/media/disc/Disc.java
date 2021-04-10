@@ -24,6 +24,20 @@ public class Disc extends Media {
 		return length;
 	}
 	
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	@Override
+	public String getDetail() {
+		String detail = new String();
+		detail += "ID: " + getId() + " - ";
+		detail += getTitle() + " - ";
+		detail += "by " + getDirector() + " - ";
+		detail += getCost() + "$";
+		return detail;
+	}
+	
 	
 
 }

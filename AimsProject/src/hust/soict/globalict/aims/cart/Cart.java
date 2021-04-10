@@ -3,13 +3,14 @@ import java.util.ArrayList;
 
 import hust.soict.globalict.aims.media.Media;
 import hust.soict.globalict.aims.media.book.Book;
+import hust.soict.globalict.aims.media.disc.cd.CompactDisc;
 import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
 import hust.soict.globalict.aims.utils.MediaUtils;
 
 public class Cart {
 	public static final int MAX_NUMBERS_ORDERED = 20;
 	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
-	private boolean hasLuckyNumber = false;
+	private Media luckyItem;
 	
 	// Update
 	public void addMedia(Media...newMediaList) {
@@ -42,7 +43,7 @@ public class Cart {
 	
 	public void emptyCart() {
 		itemsOrdered = new ArrayList<Media>();
-		hasLuckyNumber = false;
+		luckyItem = null;
 	}
 	
 	// Display 
@@ -52,16 +53,11 @@ public class Cart {
 		} else {
 			int i = 0;
 			for(Media item : itemsOrdered) {
-				if (item instanceof DigitalVideoDisc) {
-					DigitalVideoDisc dvd = (DigitalVideoDisc)item;
-					System.out.println("\t" + (i+1) + ". " + dvd.getDetail());
-				} else if (item instanceof Book) {
-					Book book = (Book)item;
-					System.out.println("\t" + (i+1) + ". " + book.getDetail());
-				} else {
-					System.out.println("\tDowncasting error");
-				}
+				System.out.println("\t" + (i+1) + ". " + item.getDetail());
 				i++;
+			}
+			if (luckyItem != null) {
+				System.out.println("* Lucky item: " + luckyItem.getDetail());
 			}
 			System.out.println("\tTotal cost: " + totalCost() + " $");
 		}
@@ -76,15 +72,7 @@ public class Cart {
 		System.out.println("Search for " + id);
 		for(Media item : itemsOrdered) {
 			if (item.getId() == id) {
-				if (item instanceof DigitalVideoDisc) {
-					DigitalVideoDisc dvdItem = (DigitalVideoDisc)item;
-					System.out.println(dvdItem.getDetail());
-				} else if (item instanceof Book) {
-					Book bookItem = (Book)item;
-					System.out.println(bookItem.getDetail());
-				} else {
-					System.out.println("Downcasting error");
-				}
+				System.out.println(item.getDetail());
 				return;
 			}
 		}
@@ -100,15 +88,7 @@ public class Cart {
 		boolean isFound = false;
 		for(Media item : itemsOrdered) {
 			if (item.titleContains(key)) {
-				if (item instanceof DigitalVideoDisc) {
-					DigitalVideoDisc dvdItem = (DigitalVideoDisc)item;
-					System.out.println(dvdItem.getDetail());
-				} else if (item instanceof Book) {
-					Book bookItem = (Book)item;
-					System.out.println(bookItem.getDetail());
-				} else {
-					System.out.println("Downcasting error");
-				}
+				System.out.println(item.getDetail());
 				isFound = true;
 			}
 		}
@@ -142,6 +122,9 @@ public class Cart {
 		for(Media item : itemsOrdered) {
 			total += item.getCost();
 		}
+		if (luckyItem != null) {
+			total -= luckyItem.getCost();
+		}
 		return total;
 	}
 	
@@ -155,31 +138,19 @@ public class Cart {
 			System.out.println("The cart is empty");
 			return;
 		}
-		if (hasLuckyNumber) {
+		if (luckyItem != null) {
 			System.out.println("Your cart already have the lucky item");
 			return;
 		}
-		int luckyNumber = (int) Math.round((itemsOrdered.size()-1) * Math.random());
-		Media luckyItem = itemsOrdered.get(luckyNumber);
-		System.out.println("Lucky item: ");
-		if(luckyItem instanceof Book) {
-			System.out.println(((Book) luckyItem).getDetail());
-		} else {
-			System.out.println(((DigitalVideoDisc) luckyItem).getDetail());
-		}
 		
-		// Change the cost
-		if (luckyItem instanceof Book) {
-			Book newFreeItem = new Book();
-			newFreeItem.copyContentOf((Book)luckyItem);
-			newFreeItem.setCost(0);
-			itemsOrdered.set(luckyNumber, newFreeItem);
-		} else if (luckyItem instanceof DigitalVideoDisc) {
-			DigitalVideoDisc newFreeItem = new DigitalVideoDisc(null);
-			newFreeItem.copyContentOf((DigitalVideoDisc)luckyItem);
-			newFreeItem.setCost(0);
-			itemsOrdered.set(luckyNumber, newFreeItem);
-		}
-		hasLuckyNumber = true;
+		// Generate the lucky item
+		int luckyNumber = (int) Math.round((itemsOrdered.size()-1) * Math.random());
+		luckyItem = itemsOrdered.get(luckyNumber);
+		
+		// Print the result
+		System.out.println("Your lucky item: ");
+		System.out.println(luckyItem.getDetail());
+		System.out.println("Total cost: " + totalCost() + " $");
+		
 	}
 }

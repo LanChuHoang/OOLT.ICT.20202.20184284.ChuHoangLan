@@ -12,11 +12,15 @@ public class Store {
 	// Update
 	public void addMedia(Media...newMediaList) {
 		for (Media newMedia : newMediaList) {
-			if (newMedia == null) {
-				System.out.println("The new media is null");
+			if (newMedia != null) {
+				if (contains(newMedia)) {
+					System.out.println("The media " + newMedia.getTitle() + " is already in the store. Add a new one");
+				} else {
+					itemsInStore.add(newMedia);
+					System.out.println("Added " + newMedia.getTitle() + " to the Store");
+				}
 			} else {
-				itemsInStore.add(newMedia);
-				System.out.println("Added " + newMedia.getTitle() + " to the Store");
+				System.out.println("The new media is null");
 			}
 		}
 	
@@ -40,15 +44,7 @@ public class Store {
 		} else {
 			int i = 0;
 			for(Media item : itemsInStore) {
-				if (item instanceof DigitalVideoDisc) {
-					DigitalVideoDisc dvd = (DigitalVideoDisc)item;
-					System.out.println("\t" + (i+1) + ". " + dvd.getDetail());
-				} else if (item instanceof Book) {
-					Book book = (Book)item;
-					System.out.println("\t"+ (i+1) + ". " + book.getDetail());
-				} else {
-					System.out.println("\tDowncasting error");
-				}
+				System.out.println("\t" + (i+1) + ". " + item.getDetail());
 				i++;
 			}
 		}
@@ -59,22 +55,11 @@ public class Store {
 		return itemsInStore.size() == 0;
 	}
 	
-	public boolean contains(Media media) {
-		String inputTitle = media.getTitle();
-		if (media instanceof DigitalVideoDisc) {
-			for (Media item : itemsInStore) {
-				if (item instanceof DigitalVideoDisc && item.getTitle().equals(inputTitle)) {
-					return true;
-				}
+	public boolean contains(Media input) {
+		for (Media item : itemsInStore) {
+			if (item.getClass() == input.getClass() && item.getTitle().equals(input.getTitle())) {
+				return true;
 			}
-		} else if (media instanceof Book) {
-			for (Media item : itemsInStore) {
-				if (item instanceof Book && item.getTitle().equals(inputTitle)) {
-					return true;
-				}
-			}
-		} else {
-			System.out.println("Downcasting error");
 		}
 		return false;
 	}
