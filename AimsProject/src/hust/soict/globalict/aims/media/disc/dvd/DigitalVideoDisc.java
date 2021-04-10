@@ -1,8 +1,9 @@
 package hust.soict.globalict.aims.media.disc.dvd;
 
+import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.disc.Disc;
 
-public class DigitalVideoDisc extends Disc {
+public class DigitalVideoDisc extends Disc implements Playable{
 	
 	// Others
 	public void copyContentOf(DigitalVideoDisc dvd) {
@@ -40,6 +41,12 @@ public class DigitalVideoDisc extends Disc {
 		String detail = super.getDetail();
 		String header = "\tDVD - ";
 		return header + detail;
+	}
+
+	@Override
+	public void play() {
+		System.out.println("Playing DVD: " + getTitle());
+		System.out.println("DVD length: " + getLength());
 	}
 
 	
