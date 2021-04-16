@@ -10,6 +10,15 @@ abstract public class Media {
 	private float cost;
 	private LocalDate dateAdded;
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Media) {
+			Media downcastedObj = (Media) obj;
+			return this.id == downcastedObj.getId();
+		}
+		return false;
+	}
+	
 	// Init
 	public Media() {
 		dateAdded = LocalDate.now();

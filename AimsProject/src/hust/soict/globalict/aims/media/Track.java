@@ -34,6 +34,15 @@ public class Track implements Playable{
 		
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Track) {
+			Track downcastedObj = (Track) obj;
+			return (this.title == downcastedObj.getTitle()) && (this.length == downcastedObj.getLength());
+		}
+		return false;
+	}
+	
 	
 
 }
