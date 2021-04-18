@@ -42,7 +42,7 @@ public class Store {
 		} else {
 			int i = 0;
 			for(Media item : itemsInStore) {
-				System.out.println("\t" + (i+1) + ". " + item.getDetail());
+				System.out.println("\t" + (i+1) + ". " + item.toString());
 				i++;
 			}
 		}

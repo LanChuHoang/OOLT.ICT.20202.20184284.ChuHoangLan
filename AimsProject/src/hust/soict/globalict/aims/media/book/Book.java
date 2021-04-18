@@ -74,20 +74,16 @@ public class Book extends Media {
 		return result;
 	}
 	
-	public String getDetail() {
-		String header = "\tBook - ";
-		String detail = "";
-		detail += "ID: " + getId() + " - ";
-		detail += getTitle() + " - ";
-		detail += "by " + getAuthorsString() + " - ";
-		detail += getCost() + "$";
-		return header + detail;
-	}
-
 	public List<String> getAuthors() {
 		return authors;
 	}
 	
-	
+	// Overriding methods 
+	@Override
+	public String toString() {
+		String head = "\tBook - ";
+		String tail = " by " + getAuthorsString();
+		return head + super.toString() + tail;
+	}
 
 }

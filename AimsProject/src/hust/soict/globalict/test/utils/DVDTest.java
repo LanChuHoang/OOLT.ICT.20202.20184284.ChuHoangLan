@@ -20,13 +20,13 @@ public class DVDTest {
 		DigitalVideoDisc[] sorted = DVDUtils.sortByCost(dvdList);
 		System.out.println("Sort by cost");
 		for(int i = 0; i < sorted.length; ++i) {
-			System.out.println(sorted[i].getDetail());
+			System.out.println(sorted[i].toString());
 		}
 		
 		sorted = DVDUtils.sortByTitle(dvdList);
 		System.out.println("Sort by title");
 		for(int i = 0; i < sorted.length; ++i) {
-			System.out.println(sorted[i].getDetail());
+			System.out.println(sorted[i].toString());
 		}
 		
 	}

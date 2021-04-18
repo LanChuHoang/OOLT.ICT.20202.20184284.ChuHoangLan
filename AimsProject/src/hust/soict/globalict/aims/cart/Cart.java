@@ -1,13 +1,35 @@
 package hust.soict.globalict.aims.cart;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import hust.soict.globalict.aims.media.Media;
-import hust.soict.globalict.aims.utils.MediaUtils;
 
 public class Cart {
 	public static final int MAX_NUMBERS_ORDERED = 20;
 	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
 	private Media luckyItem;
+	
+	// Getter & Setter
+	public void getLuckyItem() {
+		if (itemsOrdered.isEmpty()) {
+			System.out.println("The cart is empty");
+			return;
+		}
+		if (luckyItem != null) {
+			System.out.println("Your cart already have the lucky item");
+			return;
+		}
+		
+		// Generate the lucky item
+		int luckyNumber = (int) Math.round((itemsOrdered.size()-1) * Math.random());
+		luckyItem = itemsOrdered.get(luckyNumber);
+		
+		// Print the result
+		System.out.println("Your lucky item: ");
+		System.out.println(luckyItem.toString());
+		System.out.println("Total cost: " + totalCost() + " $");
+		
+	}
 	
 	// Update
 	public void addMedia(Media...newMediaList) {
@@ -18,9 +40,11 @@ public class Cart {
 			} else {
 				if (newMedia == null) {
 					System.out.println("The new media is null");
-				} else {
+				} else if (!itemsOrdered.contains(newMedia)) {
 					itemsOrdered.add(newMedia);
 					System.out.println("Added " + newMedia.getTitle() + " to the Cart");
+				} else {
+					System.out.println("The media " + newMedia.getTitle() + " is already in the Cart");
 				}
 			}
 		}
@@ -50,11 +74,11 @@ public class Cart {
 		} else {
 			int i = 0;
 			for(Media item : itemsOrdered) {
-				System.out.println("\t" + (i+1) + ". " + item.getDetail());
+				System.out.println("\t" + (i+1) + ". " + item.toString());
 				i++;
 			}
 			if (luckyItem != null) {
-				System.out.println("* Lucky item: " + luckyItem.getDetail());
+				System.out.println("* Lucky item: " + luckyItem.toString());
 			}
 			System.out.println("\tTotal cost: " + totalCost() + " $");
 		}
@@ -83,7 +107,7 @@ public class Cart {
 		boolean isFound = false;
 		for(Media item : itemsOrdered) {
 			if (item.titleContains(key)) {
-				System.out.println(item.getDetail());
+				System.out.println(item.toString());
 				isFound = true;
 			}
 		}
@@ -93,22 +117,16 @@ public class Cart {
 	}
 	
 	// Sorting
-	public void sortByCostAndPrint() {
-		System.out.println("Sorted by cost");
-		MediaUtils.sortByCost(itemsOrdered);
-		printCart();
-	}
-	
-	public void sortByTilteAndPrint() {
-		System.out.println("Sorted by tilte");
-		MediaUtils.sortByTitle(itemsOrdered);
-		printCart();
+	public void sortByTitleAndCategory() {
+		Collections.sort(itemsOrdered);
 	}
 	
 	public void sortByTitleAndCost() {
-		System.out.println("Sorted by title and cost");
-		MediaUtils.sortByTitleAndCost(itemsOrdered);
-		printCart();
+		Collections.sort(itemsOrdered, Media.COMPARE_BY_TITLE_COST);
+	}
+	
+	public void sortByCostAndTitle() {
+		Collections.sort(itemsOrdered, Media.COMPARE_BY_COST_TITLE);
 	}
 	
 	// Calculating
@@ -124,28 +142,4 @@ public class Cart {
 	}
 	
 	
-	
-	//
-	//
-	// Getter
-	public void getLuckyItem() {
-		if (itemsOrdered.isEmpty()) {
-			System.out.println("The cart is empty");
-			return;
-		}
-		if (luckyItem != null) {
-			System.out.println("Your cart already have the lucky item");
-			return;
-		}
-		
-		// Generate the lucky item
-		int luckyNumber = (int) Math.round((itemsOrdered.size()-1) * Math.random());
-		luckyItem = itemsOrdered.get(luckyNumber);
-		
-		// Print the result
-		System.out.println("Your lucky item: ");
-		System.out.println(luckyItem.getDetail());
-		System.out.println("Total cost: " + totalCost() + " $");
-		
-	}
 }

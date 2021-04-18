@@ -1,6 +1,8 @@
 package hust.soict.globalict.aims.media.disc;
 
+import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
+import hust.soict.globalict.aims.media.Track;
 
 public class Disc extends Media{
 	private String director;
@@ -15,7 +17,7 @@ public class Disc extends Media{
 		this.length = length;
 	}
 	
-	// Getter
+	// Getter & Setter
 	public String getDirector() {
 		return director;
 	}
@@ -27,14 +29,10 @@ public class Disc extends Media{
 	public void setLength(int length) {
 		this.length = length;
 	}
-
+	
+	// Overriding methods
 	@Override
-	public String getDetail() {
-		String detail = new String();
-		detail += "ID: " + getId() + " - ";
-		detail += getTitle() + " - ";
-		detail += "by " + getDirector() + " - ";
-		detail += getCost() + "$";
-		return detail;
+	public String toString() {
+		return super.toString() + " by " + director;
 	}
 }

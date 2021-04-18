@@ -1,23 +1,17 @@
 package hust.soict.globalict.aims.media;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
-abstract public class Media {
+abstract public class Media implements Comparable<Media> {
+	public static final Comparator<Media> COMPARE_BY_TITLE_COST = Comparator.comparing(Media::getTitle).thenComparing(Media::getCost);
+	public static final Comparator<Media> COMPARE_BY_COST_TITLE = Comparator.comparing(Media::getCost).thenComparing(Media::getTitle);
 	public static int numMediaCreated = 0;
 	private int id;
 	private String title;
 	private String category;
 	private float cost;
 	private LocalDate dateAdded;
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Media) {
-			Media downcastedObj = (Media) obj;
-			return this.id == downcastedObj.getId();
-		}
-		return false;
-	}
 	
 	// Init
 	public Media() {
@@ -31,27 +25,6 @@ abstract public class Media {
 		this.title = title;
 		this.category = category;
 		this.cost = cost;
-	}
-	
-	// Checking
-	public boolean titleContains(String words) {
-		if (words == null || title == null) {
-			return false;
-		}
-		// Convert 2 strings to lower case
-		words = words.toLowerCase();
-		String lowercaseTitle = title.toLowerCase();
-	
-		// Split the input tokens to an array of tokens
-		String[] tokens = words.split(" ");
-		
-		// Check the tokens one by one
-		for (String token : tokens) {
-			if (lowercaseTitle.contains(token)) {
-				return true;
-			}
-		}
-		return false;	
 	}
 	
 	// Getter and setter
@@ -79,6 +52,56 @@ abstract public class Media {
 		return dateAdded;
 	}
 	
-	abstract public String getDetail();
-
+	// Override methods
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Media) {
+			Media downcastedObj = (Media) obj;
+			return this.id == downcastedObj.getId();
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		String detail = "";
+		detail += "ID: " + getId() + " - ";
+		detail += getTitle() + " - ";
+		detail += getCost() + " - ";
+		detail += getCost() + "$";
+		return detail;
+	}
+	
+	// Others
+	
+	// Checking
+	public boolean titleContains(String words) {
+		if (words == null || title == null) {
+			return false;
+		}
+		// Convert 2 strings to lower case
+		words = words.toLowerCase();
+		String lowercaseTitle = title.toLowerCase();
+	
+		// Split the input tokens to an array of tokens
+		String[] tokens = words.split(" ");
+		
+		// Check the tokens one by one
+		for (String token : tokens) {
+			if (lowercaseTitle.contains(token)) {
+				return true;
+			}
+		}
+		return false;	
+	}
+	
+	// Implement Comparable
+	@Override
+	public int compareTo(Media o) {
+		int compareTitleResult = title.compareTo(o.getTitle());
+		if (compareTitleResult == 0) {
+			return category.compareTo(o.getCategory());
+		}
+		return compareTitleResult;
+	}
 }

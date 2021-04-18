@@ -6,11 +6,13 @@ public class Track implements Playable{
 	private String title;
 	private int length;
 
+	// Init
 	public Track(String title, int length) {
 		this.title = title;
 		this.length = length;
 	}
-
+	
+	// Getter & Setter
 	public String getTitle() {
 		return title;
 	}
@@ -26,23 +28,23 @@ public class Track implements Playable{
 	public void setLength(int length) {
 		this.length = length;
 	}
-
+	
+	// Override Methods
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Track) {
+			Track downcastedObj = (Track) obj;
+			return (this.title.equals(downcastedObj.getTitle())) && (this.length == downcastedObj.getLength());
+		}
+		return false;
+	}
+	
+	// Others
 	@Override
 	public void play() {
 		System.out.println("Playing Track: " + getTitle());
 		System.out.println("Track length: " + getLength());
 		
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Track) {
-			Track downcastedObj = (Track) obj;
-			return (this.title == downcastedObj.getTitle()) && (this.length == downcastedObj.getLength());
-		}
-		return false;
-	}
-	
-	
 
 }

@@ -12,7 +12,7 @@ import hust.soict.globalict.aims.store.Store;
 import java.util.Scanner;
 
 public class Aims {
-	public static void initializeDataTest(Store store) {
+	public static void initializeDataTest(Store store, Cart cart) {
 		// Create 6 new items
 		Book book1 = new Book("Harry Potter1", "Fantasy", 11.5f, "Author 5", "Author 6");
 		Book book2 = new Book("Harry Potter2", "Fantasy", 11.6f, "Author 3", "Author 4");
@@ -29,13 +29,14 @@ public class Aims {
 		// Add the items to the store
 		Media[] newMedia = {book3, book2, book1, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
 		store.addMedia(newMedia);
+		cart.addMedia(newMedia);
 	}
 	
 	public static void main(String[] args) {
 		// Data test
 		Store store = new Store();
 		Cart cart = new Cart();
-		initializeDataTest(store);
+		initializeDataTest(store, cart);
 		
 		// Run the main menu
 		MemoryDaemon memoryDaemon = new MemoryDaemon();
@@ -152,7 +153,7 @@ public class Aims {
 		}
 		else {
 			// Print the found item
-			System.out.println(chosenItem.getDetail());
+			System.out.println(chosenItem.toString());
 			// Ask the user for adding the chosen item to the current cart
 			System.out.println("Do you want to add this item to your cart (y/n): ");
 			char userChoice = sc.next().charAt(0);
@@ -373,7 +374,7 @@ public class Aims {
 			if(searchItem == null) {
 				System.out.println("Cannot found");
 			} else {
-				System.out.println(searchItem.getDetail());
+				System.out.println(searchItem.toString());
 			}
 			break;
 		}
@@ -396,11 +397,15 @@ public class Aims {
 		char chosen = sc.next().charAt(0);
 		switch (chosen) {
 		case '1': {
-			cart.sortByTilteAndPrint();
+			System.out.println("Sort by title and cost: ");
+			cart.sortByTitleAndCost();
+			cart.printCart();
 			break;
 		}
 		case '2': {
-			cart.sortByCostAndPrint();
+			System.out.println("Sort by cost and title: ");
+			cart.sortByCostAndTitle();
+			cart.printCart();
 			break;
 		}
 		default:

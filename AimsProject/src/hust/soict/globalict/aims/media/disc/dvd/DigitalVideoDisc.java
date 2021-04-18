@@ -35,14 +35,14 @@ public class DigitalVideoDisc extends Disc implements Playable{
 		super(title, category, cost, director, length);
 	} 
 
-	// Getter
-
-	public String getDetail() {
-		String detail = super.getDetail();
-		String header = "\tDVD - ";
-		return header + detail;
+	// Overriding methods
+	@Override
+	public String toString() {
+		String head = "\tDVD - ";
+		return head + super.toString();
 	}
-
+	
+	// Implement Playable
 	@Override
 	public void play() {
 		System.out.println("Playing DVD: " + getTitle());

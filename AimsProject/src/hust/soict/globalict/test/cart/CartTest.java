@@ -25,8 +25,8 @@ public class CartTest {
 		anOrder.printCart();
 		
 		// Sort
-		anOrder.sortByCostAndPrint();
-		anOrder.sortByTilteAndPrint();
+		anOrder.sortByCostAndTitle();
+		anOrder.sortByTitleAndCategory();
 		anOrder.sortByTitleAndCost();
 		
 		// Search

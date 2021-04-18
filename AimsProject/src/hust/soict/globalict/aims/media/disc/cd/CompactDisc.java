@@ -10,11 +10,30 @@ public class CompactDisc extends Disc implements Playable{
 	private String artist;
 	private ArrayList<Track> tracks = new ArrayList<Track>();
 	
+	// init
+	public CompactDisc(String title, String category, float cost, String director, String artist) {
+		super(title, category, cost, director, 0);
+		this.artist = artist;
+	}
+	
+	// Getter & Setter
+	public String getArtist() {
+		return artist;
+	}
+	
+	// Overriding methods
+	@Override
+	public String toString() {
+		String head = "\tCD - ";
+		String tail = " - artist: " + artist;
+		return head + super.toString() + tail;
+	}
+	
 	// Update
 	public void addTrack(Track...newTracks) {
 		for (Track newTrack : newTracks) {
 			if (newTrack != null) {
-				if (contains(newTrack)) {
+				if (tracks.contains(newTrack)) {
 					System.err.println("The track " + newTrack.getTitle() + " is already in the CD. Add a new one");
 				} else {
 					tracks.add(newTrack);
@@ -27,11 +46,10 @@ public class CompactDisc extends Disc implements Playable{
 		}		
 	}
 	
-	public void removeTrack(String title) {
+	public void removeTrack(String title, int length) {
 		int i = 0;
 		for (Track track : tracks) {
-			if (track.getTitle().equals(title)) {
-				super.setLength(super.getLength() - track.getLength());
+			if (track.getTitle().equals(title) && track.getLength() == length) {
 				tracks.remove(i);
 				System.err.println("Removed track " + title + " from the CD");
 				return;
@@ -39,36 +57,22 @@ public class CompactDisc extends Disc implements Playable{
 			i++;
 		}
 		System.out.println("Cannot found");
+		
+//		for (Track delTrack : delTracks) {
+//			int index = tracks.indexOf(delTrack);
+//			if (index == -1) {
+//				System.out.println("Cannout found " + delTrack.getTitle());
+//			} else {
+//				super.setLength(super.getLength() - delTrack.getLength());
+//				tracks.remove(index);
+//				System.err.println("Removed track " + delTrack.getTitle() + " from the CD");
+//			}
+//		}
 	}
 	
 	// Checking
-	public boolean contains(Track input) {
-		for (Track track : tracks) {
-			if (track.getTitle().equals(input.getTitle())) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
-	// init
-
-	public CompactDisc(String title, String category, float cost, String director, String artist) {
-		super(title, category, cost, director, 0);
-		this.artist = artist;
-	}
-
-	public String getArtist() {
-		return artist;
-	}
-	
-	public String getDetail() {
-		String detail = super.getDetail();
-		String header = "\tCD - ";
-		String tail = " - artist: " + artist;
-		return header + detail + tail;
-	}
-
+	// Implement Playable
 	@Override
 	public void play() {
 		System.out.println("Playing CD: " + getTitle());
