@@ -1,12 +1,55 @@
 package hust.soict.globalict.aims.media.book;
-import java.util.ArrayList;  
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import hust.soict.globalict.aims.media.Media;
 
 public class Book extends Media {
 	private List<String> authors = new ArrayList<String>();
+	private String content;
+	private List<String> contentTokens = new ArrayList<String>();
+	private Map<String, Integer> wordFrequency = new TreeMap<String, Integer>();
 
+	// Init
+	public Book() {
+		super();
+	}
+	
+	public Book(String title, String category, float cost, String...inputAuthors) {
+		super(title, category, cost);
+		for (String author : inputAuthors) {
+			if (author != null) {
+				authors.add(author);
+			}
+		}
+	}
+	
+	// Getter & Setter
+	public String getAuthorsString() {
+		String result = new String();
+		for (String author : authors) {
+			result += author + ", ";
+		}
+		return result;
+	}
+	
+	public List<String> getAuthors() {
+		return authors;
+	}
+	
+	// Overriding methods 
+	@Override
+	public String toString() {
+		String head = "\tBook - ";
+		String tail = " by " + getAuthorsString();
+		return head + super.toString() + tail;
+	}
+	
+	// Others
 	public void copyContentOf(Book book) {
 		/*
 		super.setTitle(book.getTitle());
@@ -50,40 +93,34 @@ public class Book extends Media {
 		}
 	}
 	
-	
-	// Init
-	public Book() {
-		super();
+	public void addContents(String newContent) {
+		content = newContent;
+		processContent();
 	}
 	
-	public Book(String title, String category, float cost, String...inputAuthors) {
-		super(title, category, cost);
-		for (String author : inputAuthors) {
-			if (author != null) {
-				authors.add(author);
+	private void processContent() {
+		String[] tokens = content.split(" ");
+		for(String token : tokens) {
+			if (wordFrequency.containsKey(token)) {
+				int count = wordFrequency.get(token);
+				wordFrequency.put(token, count + 1);
+			} else {
+				wordFrequency.put(token, 1);
 			}
 		}
-	}
-	
-	// Getter
-	public String getAuthorsString() {
-		String result = new String();
-		for (String author : authors) {
-			result += author + ", ";
+		for(Map.Entry<String, Integer> token : wordFrequency.entrySet()) {
+			contentTokens.add(token.getKey());
 		}
-		return result;
 	}
 	
-	public List<String> getAuthors() {
-		return authors;
+	// Display
+	public String getFullDetail() {
+		String detail = toString();
+		detail += "\n\tContent: " + content;
+		detail += "\n\tNumber of words: " + contentTokens.size();
+		for (Map.Entry<String, Integer> token : wordFrequency.entrySet()) {
+			detail += "\n\t- " + token.getKey() + " - " + token.getValue();
+		}
+		return detail;
 	}
-	
-	// Overriding methods 
-	@Override
-	public String toString() {
-		String head = "\tBook - ";
-		String tail = " by " + getAuthorsString();
-		return head + super.toString() + tail;
-	}
-
 }
