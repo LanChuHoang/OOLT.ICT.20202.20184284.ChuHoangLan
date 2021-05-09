@@ -71,12 +71,17 @@ public class Store {
 		}
 		return null;
 	}
+
 	
+
 	
 	//
 	//
 	
 	
-	
+	// Getter & Setter 
+	public ArrayList<Media> getItemsInStore() {
+		return itemsInStore;
+	}
 	
 }

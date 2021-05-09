@@ -4,7 +4,6 @@ import hust.soict.globalict.aims.cart.Cart;
 import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
 
 public class DiskTest {
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// Create a new cart
