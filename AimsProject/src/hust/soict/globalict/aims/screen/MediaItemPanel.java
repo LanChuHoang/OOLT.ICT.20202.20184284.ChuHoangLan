@@ -3,6 +3,8 @@ package hust.soict.globalict.aims.screen;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -10,7 +12,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
@@ -18,8 +19,8 @@ import hust.soict.globalict.aims.media.Media;
 public class MediaItemPanel extends JPanel{
 	private Media media;
 	
-	public MediaItemPanel(Media media) {
-		this.media = media;
+	public MediaItemPanel(Media inputMedia) {
+		this.media = inputMedia;
 		// Set this panel's layout to BoxLayout -> make it become a vertical stack
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -43,6 +44,14 @@ public class MediaItemPanel extends JPanel{
 		if (media instanceof Playable) {
 			// Play button
 			JButton playButton = new JButton("Play");
+			playButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					((Playable) media).play();
+				}
+			});
 			choicePanel.add(playButton);
 		}
 		

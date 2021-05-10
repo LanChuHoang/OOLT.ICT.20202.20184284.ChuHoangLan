@@ -52,6 +52,16 @@ abstract public class Media implements Comparable<Media> {
 		return dateAdded;
 	}
 	
+	public String[] getDataArray() {
+		String[] data = new String[5];
+		data[0] = id + "";
+		data[1] = title;
+		data[2] = category;
+		data[3] = cost + "";
+		data[4] = dateAdded + "";
+		return data;
+	}
+	
 	// Override methods
 	@Override
 	public boolean equals(Object obj) {

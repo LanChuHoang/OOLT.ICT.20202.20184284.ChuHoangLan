@@ -1,8 +1,7 @@
 package hust.soict.globalict.aims.media.disc;
 
-import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
-import hust.soict.globalict.aims.media.Track;
+
 
 public class Disc extends Media{
 	private String director;

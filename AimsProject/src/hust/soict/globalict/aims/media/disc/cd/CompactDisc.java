@@ -1,6 +1,12 @@
 package hust.soict.globalict.aims.media.disc.cd;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Label;
 import java.util.ArrayList;
+
+import javax.swing.JDialog;
 
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Track;
@@ -75,11 +81,31 @@ public class CompactDisc extends Disc implements Playable{
 	// Implement Playable
 	@Override
 	public void play() {
-		System.out.println("Playing CD: " + getTitle());
-		System.out.println("CD length: " + getLength());
-		for(Track track : tracks) {
-			track.play();
+		JDialog playCD = new JDialog();
+		playCD.setTitle("Play CD");
+		playCD.setLayout(new GridBagLayout());
+		GridBagConstraints contraints = new GridBagConstraints();
+		contraints.insets = new Insets(0, 30, 0, 0);
+		contraints.anchor = GridBagConstraints.LINE_START;
+		
+		contraints.gridx = 0;contraints.gridy = 0;playCD.add(new Label("Playing"), contraints);
+		contraints.gridx = 1;contraints.gridy = 0;playCD.add(new Label("\""+getTitle()+"\""), contraints);
+		contraints.gridx = 0;contraints.gridy = 1;playCD.add(new Label("Total length "), contraints);
+		contraints.gridx = 1;contraints.gridy = 1;playCD.add(new Label(getLength()+""), contraints);
+		
+		if(!tracks.isEmpty()) {
+			contraints.gridx = 0;contraints.gridy = 2;playCD.add(new Label("Tracks:"), contraints);
+			int row = 3;
+			for(Track track : tracks) {
+				contraints.gridx = 0;contraints.gridy = row;playCD.add(new Label(" - \""+track.getTitle()+"\""), contraints);
+				contraints.gridx = 1;contraints.gridy = row;playCD.add(new Label(track.getLength() + ""), contraints);
+				row++;
+			}
 		}
+		
+		playCD.setBounds(500, 300, 300, 150);
+		playCD.setAlwaysOnTop(true);
+		playCD.setVisible(true);
 	}
 	
 	

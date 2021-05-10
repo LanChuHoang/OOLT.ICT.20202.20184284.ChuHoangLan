@@ -35,8 +35,9 @@ public class StoreScreenTest {
 	
 	public static void main(String[] args) {
 		initializeDataTest();
-		new StoreScreen(store);
+		new MainFrame(store, cart);
 
 	}
+	
 
 }

@@ -42,6 +42,8 @@ public class Track implements Playable{
 	// Others
 	@Override
 	public void play() {
+//		JDialog trackPlay = new JDialog();
+		
 		System.out.println("Playing Track: " + getTitle());
 		System.out.println("Track length: " + getLength());
 		
