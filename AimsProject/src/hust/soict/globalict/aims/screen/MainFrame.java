@@ -35,6 +35,7 @@ public class MainFrame extends JFrame{
 	private JPanel navigationPanel;
 	private JPanel contentPanel;
 	
+	// Init
 	public MainFrame(Store store, Cart cart) {
 		this.store = store;
 		this.cart = cart;

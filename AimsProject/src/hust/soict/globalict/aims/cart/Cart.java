@@ -1,12 +1,15 @@
 package hust.soict.globalict.aims.cart;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Observable;
 
 import hust.soict.globalict.aims.media.Media;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Cart {
 	public static final int MAX_NUMBERS_ORDERED = 20;
-	private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
+	private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
 	private Media luckyItem;
 	
 	// Getter & Setter
@@ -29,6 +32,10 @@ public class Cart {
 		System.out.println(luckyItem.toString());
 		System.out.println("Total cost: " + totalCost() + " $");
 		
+	}
+	
+	public ObservableList<Media> getItemsOrdered() {
+		return itemsOrdered;
 	}
 	
 	// Update
@@ -63,7 +70,7 @@ public class Cart {
 	}
 	
 	public void emptyCart() {
-		itemsOrdered = new ArrayList<Media>();
+		itemsOrdered = FXCollections.observableArrayList();
 		luckyItem = null;
 	}
 	
@@ -140,6 +147,11 @@ public class Cart {
 		}
 		return total;
 	}
+
+
+	
+
+
 	
 	
 }
