@@ -69,6 +69,10 @@ public class Cart {
 		
 	}
 	
+	public void removeMedia(Media media) {
+		itemsOrdered.remove(media);
+	}
+	
 	public void emptyCart() {
 		itemsOrdered = FXCollections.observableArrayList();
 		luckyItem = null;
