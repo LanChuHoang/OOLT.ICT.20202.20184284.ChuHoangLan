@@ -64,17 +64,18 @@
                </padding>
                <children>
                   <Label text="Filter" />
-                  <TextField />
-                  <RadioButton mnemonicParsing="false" selected="true" text="By ID">
+                  <TextField fx:id="filterTextField" />
+                  <RadioButton fx:id="idFilterButton" mnemonicParsing="false" selected="true" text="By ID">
                      <toggleGroup>
                         <ToggleGroup fx:id="filterModes" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="By Title" toggleGroup="$filterModes" />
+                  <RadioButton fx:id="titleFilterButton" mnemonicParsing="false" text="By Title" toggleGroup="$filterModes" />
                </children>
             </HBox>
             <TableView fx:id="cartTableView">
               <columns>
+                  <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Title" />
                 <TableColumn fx:id="categoryColumn" prefWidth="75.0" text="Category" />
                   <TableColumn fx:id="costColumn" prefWidth="75.0" text="Cost" />

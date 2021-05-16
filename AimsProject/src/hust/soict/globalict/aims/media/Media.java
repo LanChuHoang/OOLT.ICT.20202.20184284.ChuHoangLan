@@ -85,6 +85,10 @@ abstract public class Media implements Comparable<Media> {
 	// Others
 	
 	// Checking
+	public boolean idContains(String key) {
+		return Integer.toString(id).contains(key);
+	}
+	
 	public boolean titleContains(String words) {
 		if (words == null || title == null) {
 			return false;

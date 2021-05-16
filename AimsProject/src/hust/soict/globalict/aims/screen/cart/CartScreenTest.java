@@ -16,6 +16,9 @@ public class CartScreenTest {
 		Book book1 = new Book("Harry Potter1", "Fantasy", 11.5f, "Author 5", "Author 6");
 		Book book2 = new Book("Harry Potter2", "Fantasy", 11.6f, "Author 3", "Author 4");
 		Book book3 = new Book("Harry Potter3", "Fantasy", 11.7f, "Author 1", "Author 2");
+		Book book4 = new Book("Harry Potter4", "Fantasy", 11.5f, "Author 5", "Author 6");
+		Book book5 = new Book("Harry Potter5", "Fantasy", 11.6f, "Author 3", "Author 4");
+		Book book6 = new Book("Harry Potter6", "Fantasy", 11.7f, "Author 1", "Author 2");
 		DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
 		DigitalVideoDisc dvd2 = new DigitalVideoDisc("Star Wars", "Science Fiction", "George Lucas", 87, 24.95f);
 		DigitalVideoDisc dvd3 = new DigitalVideoDisc("Aladin", "Animation", "Roger Allers", 18.99f);
@@ -26,7 +29,7 @@ public class CartScreenTest {
 		Track song2 = new Track("Better", 1173);
 		cd1.addTrack(song1, song2);
 		// Add the items to the store
-		Media[] newMedia = {book3, book2, book1, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
+		Media[] newMedia = {book3, book2, book1, book4, book5, book6, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
 		cart.addMedia(newMedia);
 	}
 	public static void main(String[] args) {
