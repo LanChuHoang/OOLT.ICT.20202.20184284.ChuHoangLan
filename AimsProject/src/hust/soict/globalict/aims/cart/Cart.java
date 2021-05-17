@@ -13,25 +13,17 @@ public class Cart {
 	private Media luckyItem;
 	
 	// Getter & Setter
-	public void getLuckyItem() {
+	public Media getLuckyItem() {
 		if (itemsOrdered.isEmpty()) {
-			System.out.println("The cart is empty");
-			return;
-		}
-		if (luckyItem != null) {
-			System.out.println("Your cart already have the lucky item");
-			return;
+			return null;
 		}
 		
 		// Generate the lucky item
-		int luckyNumber = (int) Math.round((itemsOrdered.size()-1) * Math.random());
-		luckyItem = itemsOrdered.get(luckyNumber);
-		
-		// Print the result
-		System.out.println("Your lucky item: ");
-		System.out.println(luckyItem.toString());
-		System.out.println("Total cost: " + totalCost() + " $");
-		
+		if (luckyItem == null) {
+			int luckyNumber = (int) Math.round((itemsOrdered.size()-1) * Math.random());
+			luckyItem = itemsOrdered.get(luckyNumber);
+		}
+		return luckyItem;
 	}
 	
 	public ObservableList<Media> getItemsOrdered() {
@@ -144,10 +136,9 @@ public class Cart {
 	public float totalCost() {
 		float total = 0;
 		for(Media item : itemsOrdered) {
-			total += item.getCost();
-		}
-		if (luckyItem != null) {
-			total -= luckyItem.getCost();
+			if (luckyItem == null || !luckyItem.equals(item)) {
+				total += item.getCost();
+			}
 		}
 		return total;
 	}

@@ -3,14 +3,15 @@ package hust.soict.globalict.aims.screen.cart;
 
 import java.util.function.Predicate;
 
-import javax.swing.JFrame;
-
 import hust.soict.globalict.aims.cart.Cart;
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
-import hust.soict.globalict.aims.screen.AddDVDToStoreScreen;
 import hust.soict.globalict.aims.screen.MainFrame;
 import hust.soict.globalict.aims.store.Store;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
@@ -21,7 +22,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -228,6 +231,49 @@ public class CartScreenController {
 	
 	// Right panel
 	@FXML
+    void getLuckyItemButtonPressed(ActionEvent event) {
+		final Stage window = new Stage();
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.setTitle("Lucky Item");
+		window.setMinWidth(600);
+		window.setMinHeight(150);
+		
+		Label messageLabel = new Label();
+		Media luckyItem = cart.getLuckyItem();
+		if (cart.getItemsOrdered().isEmpty()) {
+			messageLabel.setText("Your cart is empty !");
+		} else {
+			messageLabel.setText("Congratulation, your lucky item is " + luckyItem.getTitle() + " - " + luckyItem.getCost() + " $ !");
+			totalCostLabel.setText(cart.totalCost() + " $");
+		}
+		messageLabel.setFont(new Font(24));
+		
+		VBox layout = new VBox(10);
+		layout.getChildren().add(messageLabel);
+		layout.setAlignment(Pos.CENTER);
+		
+		Scene scene = new Scene(layout);
+		window.setScene(scene);
+		window.showAndWait();
+		
+		
+    }
+	
+	@FXML
+    void sortTitleCostButtonPressed(ActionEvent event) {
+    	cart.sortByTitleAndCost();
+    }
+	
+	@FXML
+    void sortTitleCategoryButtonPressed(ActionEvent event) {
+    	cart.sortByTitleAndCategory();
+    }
+	
+	@FXML
+    void sortCostTitleButtonPressed(ActionEvent event) {
+		cart.sortByCostAndTitle();
+    }	
+	@FXML
     void placeOrderButtonPressed(ActionEvent event) {
 		final Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -246,8 +292,10 @@ public class CartScreenController {
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
 		window.showAndWait();
+		
+		cart.emptyCart();
     }
-	
+
 }
 
 
