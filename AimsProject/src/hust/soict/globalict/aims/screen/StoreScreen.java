@@ -34,7 +34,7 @@ public class StoreScreen extends JPanel {
 			
 			setLayout(new GridLayout(numRow, numColumn, 2, 2));
 			for(Media media : mediaInStore) {
-				MediaItemPanel itemPanel = new MediaItemPanel(media);
+				MediaItemPanel itemPanel = new MediaItemPanel(media, cart);
 				add(itemPanel);
 			}
 			

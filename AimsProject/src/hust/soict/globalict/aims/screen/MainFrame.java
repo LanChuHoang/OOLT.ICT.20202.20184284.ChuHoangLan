@@ -20,12 +20,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import hust.soict.globalict.aims.cart.Cart;
+import hust.soict.globalict.aims.screen.cart.CartScreen;
 import hust.soict.globalict.aims.store.Store;
 
 
 public class MainFrame extends JFrame{
 	private Store store;
 	private Cart cart;
+	private CartScreen cartWindow;
+	private MainFrame storeWindow = this; 
 	
 	private StoreScreen storeScreen;
 	private AddBookToStoreScreen addBookToStoreScreen;
@@ -36,12 +39,12 @@ public class MainFrame extends JFrame{
 	private JPanel contentPanel;
 	
 	// Init
-	public MainFrame(Store store, Cart cart) {
+	public MainFrame(Store store, Cart cart, Boolean visible) {
 		this.store = store;
 		this.cart = cart;
-		storeScreen = new StoreScreen(store, cart);
 		
 		navigationPanel = createNavigationPanel();
+		storeScreen = new StoreScreen(store, cart);
 		contentPanel = storeScreen;
 		
 		Container contentPane = getContentPane();
@@ -52,12 +55,42 @@ public class MainFrame extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Store");
 		setSize(1024, 768);
-		setVisible(true);
+		setVisible(visible);
 		
 	}
 	
 	// Change screen
-	public void changeScreen(JPanel screen) {
+	public void changeScreen(String option) {
+		JPanel screen = new JPanel();
+		switch (option) {
+		case "Add Book": {
+			addBookToStoreScreen = new AddBookToStoreScreen(store, cart, MainFrame.this);
+			screen = addBookToStoreScreen;
+			break;
+		}
+		case "Add CD": {
+			addCDToStoreScreen = new AddCDToStoreScreen(store, cart, MainFrame.this);
+			screen = addCDToStoreScreen;
+			break;			
+		}
+		case "Add DVD": {
+			addDVDToStoreScreen = new AddDVDToStoreScreen(store, cart, MainFrame.this);
+			screen = addDVDToStoreScreen;
+			break;
+		}
+		case "View store": {
+			storeScreen = new StoreScreen(store, cart);
+			screen = storeScreen;
+			break;
+		}
+		case "View cart": {
+			storeWindow.setVisible(false);
+			cartWindow.setVisible(true);
+			return;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + option);
+		}
 		getContentPane().remove(contentPanel);
 		contentPanel = screen;
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -65,7 +98,18 @@ public class MainFrame extends JFrame{
 		setVisible(true);
 	}
 	
-	// Menu bar on top with Options menu
+	// Navigation Bar
+	
+	// 1. Navigation Panel
+		public JPanel createNavigationPanel() {
+			JPanel panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			panel.add(createAddItemMenuBar());
+			panel.add(createHeaderPanel());
+			return panel;
+		}
+	
+	// 1.1 Menu bar on top with Options menu
 	public JMenuBar createAddItemMenuBar() {
 		JMenu optionMenu = new JMenu("Options");
 		
@@ -97,44 +141,17 @@ public class MainFrame extends JFrame{
 		return storeMenuBar;
 	}
 	
-	// ACTION: Menu Item Listener
-	public class MenuItemListener implements ActionListener {
-		
+	// 1.1 ACTION: Menu Item Listener
+	public class MenuItemListener implements ActionListener {	
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
 			String option = e.getActionCommand();
-			switch (option) {
-				case "Add Book": {
-					addBookToStoreScreen = new AddBookToStoreScreen(store, cart, MainFrame.this);
-					changeScreen(addBookToStoreScreen);
-					break;
-				}
-				case "Add CD": {
-					addCDToStoreScreen = new AddCDToStoreScreen(store, cart, MainFrame.this);
-					changeScreen(addCDToStoreScreen);
-					break;			
-				}
-				case "Add DVD": {
-					addDVDToStoreScreen= new AddDVDToStoreScreen(store, cart, MainFrame.this);
-					changeScreen(addDVDToStoreScreen);
-					break;
-				}
-				case "View store": {
-					storeScreen = new StoreScreen(store, cart);
-					changeScreen(storeScreen);
-					break;
-				}
-				case "View cart": {
-					break;
-				}
-				default:
-					throw new IllegalArgumentException("Unexpected value: " + option);
-				}
+			changeScreen(option);
 		}
 	}
 	
-	// Header panel with AIMS Title and View Cart Button
+	// 1.2 Header panel with AIMS Title and View Cart Button
 	public JPanel createHeaderPanel() {
 		// Title label
 		JLabel titleLabel = new JLabel("AIMS");
@@ -145,6 +162,12 @@ public class MainFrame extends JFrame{
 		JButton viewCartButton = new JButton("View Cart");
 		viewCartButton.setPreferredSize(new Dimension(100, 50));
 		viewCartButton.setMaximumSize(new Dimension(100, 50));
+		viewCartButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				changeScreen("View cart");
+			}
+		});
 		
 		// Horizontal stack
 		JPanel headerPanel = new JPanel();
@@ -160,12 +183,15 @@ public class MainFrame extends JFrame{
 		return headerPanel;
 	}
 	
-	// Navigation Panel
-	public JPanel createNavigationPanel() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(createAddItemMenuBar());
-		panel.add(createHeaderPanel());
-		return panel;
+	
+	
+	
+	// Getter & Setter
+	public AddBookToStoreScreen getAddBookToStoreScreen() {
+		return addBookToStoreScreen;
+	}
+	
+	public void setCartWindow(CartScreen cartWindow) {
+		this.cartWindow = cartWindow;
 	}
 }

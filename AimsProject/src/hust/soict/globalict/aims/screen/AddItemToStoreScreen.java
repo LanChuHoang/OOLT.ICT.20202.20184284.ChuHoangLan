@@ -220,7 +220,7 @@ public class AddItemToStoreScreen extends JPanel{
 				addNewItemToStore();
 				
 				// Show the message 
-				JOptionPane.showMessageDialog(rootPane, "Added new item !");
+				JOptionPane.showMessageDialog(rootPane, "Added new item to store!");
 			} else if(sourceName.equals(cancelButton.getText())) {
 				for (JComponent[] field : fields) {
 					if (field[1] instanceof JTextField) {

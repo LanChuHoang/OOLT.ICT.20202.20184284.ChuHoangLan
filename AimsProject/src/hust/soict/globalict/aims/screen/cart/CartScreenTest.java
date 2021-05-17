@@ -6,11 +6,14 @@ import hust.soict.globalict.aims.media.Track;
 import hust.soict.globalict.aims.media.book.Book;
 import hust.soict.globalict.aims.media.disc.cd.CompactDisc;
 import hust.soict.globalict.aims.media.disc.dvd.DigitalVideoDisc;
+import hust.soict.globalict.aims.screen.MainFrame;
+import hust.soict.globalict.aims.store.Store;
 
 public class CartScreenTest {
 	
+	private static Store store = new Store();
 	private static Cart cart = new Cart();
-
+	
 	public static void initializeDataTest() {
 		// Create 6 new items
 		Book book1 = new Book("Harry Potter1", "Fantasy", 11.5f, "Author 5", "Author 6");
@@ -31,11 +34,18 @@ public class CartScreenTest {
 		// Add the items to the store
 		Media[] newMedia = {book3, book2, book1, book4, book5, book6, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
 		cart.addMedia(newMedia);
+		store.addMedia(newMedia);
 	}
+	
 	public static void main(String[] args) {
 		initializeDataTest();
-		new CartScreen(cart);
-
+		CartScreen cartWindow = new CartScreen(store, cart, false);
+		MainFrame storeWindow = new MainFrame(store, cart, false);
+		
+		cartWindow.getController().setStoreWindow(storeWindow);
+		storeWindow.setCartWindow(cartWindow);
+		
+		storeWindow.setVisible(true);
 	}
 
 }
