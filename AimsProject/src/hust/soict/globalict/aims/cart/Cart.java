@@ -56,7 +56,7 @@ public class Cart {
 				return;
 			}
 		}
-		throw new IllegalArgumentException("The media " + id + " is not in the cart");
+		throw new IllegalArgumentException("The media " + id + " is not in the Cart");
 		
 	}
 	

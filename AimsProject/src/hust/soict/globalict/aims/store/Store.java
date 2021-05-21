@@ -22,7 +22,7 @@ public class Store {
 	
 	}
 	
-	public void removeMedia(int id) {
+	public void removeMedia(int id) throws IllegalArgumentException{
 		for (Media item : itemsInStore) {
 			if(item.getId() == id) {
 				itemsInStore.remove(item);
@@ -30,7 +30,18 @@ public class Store {
 				return;
 			}
 		}
-		System.out.println("\tCannot Found");
+		throw new IllegalArgumentException("The media " + id + " is not in the Store");
+	}
+	
+	public void removeMedia(Media media) throws NullPointerException, IllegalArgumentException {
+		if (media == null) {
+			throw new NullPointerException("The input media is null");
+		} else if (!itemsInStore.contains(media)){
+			throw new IllegalArgumentException("The media " + media.getTitle() + " is not in the Store");
+		} else {
+			itemsInStore.remove(media);
+			System.out.println("Removed " + media.getTitle() + " from the Store");
+		}
 	}
 
 	// Display
@@ -51,15 +62,6 @@ public class Store {
 		return itemsInStore.size() == 0;
 	}
 	
-	public boolean contains(Media input) {
-		for (Media item : itemsInStore) {
-			if (item.getClass() == input.getClass() && item.getTitle().equals(input.getTitle())) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	// Searching 
 	public Media searchByID(int id) {
 		for(Media item : itemsInStore) {
@@ -70,9 +72,6 @@ public class Store {
 		return null;
 	}
 
-	
-
-	
 	//
 	//
 	
