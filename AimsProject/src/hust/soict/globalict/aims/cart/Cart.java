@@ -48,7 +48,7 @@ public class Cart {
 		}
 	}
 	
-	public void removeMedia(int id) {
+	public void removeMedia(int id) throws IllegalArgumentException{
 		for (Media item : itemsOrdered) {
 			if (item.getId() == id) {
 				itemsOrdered.remove(item);
@@ -56,12 +56,19 @@ public class Cart {
 				return;
 			}
 		}
-		System.out.println("Cannot Found");
+		throw new IllegalArgumentException("The media " + id + " is not in the cart");
 		
 	}
 	
-	public void removeMedia(Media media) {
-		itemsOrdered.remove(media);
+	public void removeMedia(Media media) throws NullPointerException, IllegalArgumentException {
+		if (media == null) {
+			throw new NullPointerException("The input media is null");
+		} else if (!itemsOrdered.contains(media)){
+			throw new IllegalArgumentException("The media " + media.getTitle() + " is not in the cart");
+		} else {
+			itemsOrdered.remove(media);
+			System.out.println("Removed " + media.getTitle() + " from the Cart");
+		}
 	}
 	
 	public void emptyCart() {
@@ -100,22 +107,17 @@ public class Cart {
 		return null;
 	}
 	
-	public void searchByTitleFor(String key) {
+	public Media searchByTitleFor(String key) throws NullPointerException {
 		if (key == null) {
-			System.out.println("The input string is null");
-			return;
+			throw new NullPointerException("The input string is null");
 		}
 		
-		boolean isFound = false;
-		for(Media item : itemsOrdered) {
-			if (item.titleContains(key)) {
-				System.out.println(item.toString());
-				isFound = true;
+		for (Media media : itemsOrdered) {
+			if (media.getTitle().equals(key)) {
+				return media;
 			}
 		}
-		if (!isFound) {
-			System.out.println("\tCannot Found");
-		}
+		return null;
 	}
 	
 	// Sorting

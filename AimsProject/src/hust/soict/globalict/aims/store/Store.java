@@ -8,17 +8,15 @@ public class Store {
 	private ArrayList<Media> itemsInStore = new ArrayList<Media>();
 	
 	// Update
-	public void addMedia(Media...newMediaList) {
+	public void addMedia(Media...newMediaList) throws NullPointerException, IllegalArgumentException {
 		for (Media newMedia : newMediaList) {
-			if (newMedia != null) {
-				if (contains(newMedia)) {
-					System.out.println("The media " + newMedia.getTitle() + " is already in the store. Add a new one");
-				} else {
-					itemsInStore.add(newMedia);
-					System.out.println("Added " + newMedia.getTitle() + " to the Store");
-				}
+			if (newMedia == null) {
+				throw new NullPointerException("The input media is null");
+			} else if (itemsInStore.contains(newMedia)) {
+				throw new IllegalArgumentException("The media " + newMedia.getTitle() + " is already in the Store");
 			} else {
-				System.out.println("The new media is null");
+				itemsInStore.add(newMedia);
+				System.out.println("Added " + newMedia.getTitle() + " to the Store");
 			}
 		}
 	
