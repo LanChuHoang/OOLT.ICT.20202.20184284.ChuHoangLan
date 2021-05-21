@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
 
+import javax.naming.LimitExceededException;
+
 import hust.soict.globalict.aims.media.Media;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,20 +33,17 @@ public class Cart {
 	}
 	
 	// Update
-	public void addMedia(Media...newMediaList) {
+	public void addMedia(Media...newMediaList) throws LimitExceededException, NullPointerException, IllegalArgumentException {
 		for (Media newMedia : newMediaList) {
 			if (this.isFull()) {
-				System.out.println("The cart is full. Cannot add more media");
-				return;
+				throw new LimitExceededException("The cart is full. Cannot add more media");
+			} else if (newMedia == null) {
+				throw new NullPointerException("The input media is null");
+			} else if (itemsOrdered.contains(newMedia)) {
+				throw new IllegalArgumentException("The media " + newMedia.getTitle() + " is already in the Cart");
 			} else {
-				if (newMedia == null) {
-					System.out.println("The new media is null");
-				} else if (!itemsOrdered.contains(newMedia)) {
-					itemsOrdered.add(newMedia);
-					System.out.println("Added " + newMedia.getTitle() + " to the Cart");
-				} else {
-					System.out.println("The media " + newMedia.getTitle() + " is already in the Cart");
-				}
+				itemsOrdered.add(newMedia);
+				System.out.println("Added " + newMedia.getTitle() + " to the Cart");
 			}
 		}
 	}

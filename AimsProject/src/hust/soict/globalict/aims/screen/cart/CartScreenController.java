@@ -273,6 +273,7 @@ public class CartScreenController {
     void sortCostTitleButtonPressed(ActionEvent event) {
 		cart.sortByCostAndTitle();
     }	
+	
 	@FXML
     void placeOrderButtonPressed(ActionEvent event) {
 		final Stage window = new Stage();
