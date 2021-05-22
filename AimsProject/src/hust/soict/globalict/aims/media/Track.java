@@ -63,7 +63,7 @@ public class Track implements Playable{
 			contraints.gridx = 1;contraints.gridy = 0;dialog.add(new Label("\""+getTitle()+"\""), contraints);
 			contraints.gridx = 0;contraints.gridy = 1;dialog.add(new Label("Length "), contraints);
 			contraints.gridx = 1;contraints.gridy = 1;dialog.add(new Label(getLength()+""), contraints);
-			dialog.setBounds(500, 300, 300, 150);
+			dialog.setBounds(500, 400, 300, 150);
 			dialog.setAlwaysOnTop(true);
 			dialog.setVisible(true);
 		} else {

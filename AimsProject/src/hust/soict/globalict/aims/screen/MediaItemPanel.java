@@ -15,12 +15,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import hust.soict.globalict.aims.cart.Cart;
 import hust.soict.globalict.aims.exception.PlayerException;
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
+
 
 public class MediaItemPanel extends JPanel{
 	private static Cart cart;
@@ -78,11 +80,10 @@ public class MediaItemPanel extends JPanel{
 			playButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
 					try {
 						((Playable) media).play();
 					} catch (PlayerException exception) {
-						exception.printStackTrace();
+						JOptionPane.showMessageDialog(null, exception.getMessage(), "Playing Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});

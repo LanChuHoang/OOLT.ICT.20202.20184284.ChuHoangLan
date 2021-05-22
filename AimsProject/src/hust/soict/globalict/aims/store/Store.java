@@ -8,7 +8,7 @@ public class Store {
 	private ArrayList<Media> itemsInStore = new ArrayList<Media>();
 	
 	// Update
-	public void addMedia(Media...newMediaList) throws NullPointerException, IllegalArgumentException {
+	public void addMedia(Media...newMediaList) {
 		for (Media newMedia : newMediaList) {
 			if (newMedia == null) {
 				throw new NullPointerException("The input media is null");
@@ -22,7 +22,7 @@ public class Store {
 	
 	}
 	
-	public void removeMedia(int id) throws IllegalArgumentException{
+	public void removeMedia(int id) {
 		for (Media item : itemsInStore) {
 			if(item.getId() == id) {
 				itemsInStore.remove(item);
@@ -33,7 +33,7 @@ public class Store {
 		throw new IllegalArgumentException("The media " + id + " is not in the Store");
 	}
 	
-	public void removeMedia(Media media) throws NullPointerException, IllegalArgumentException {
+	public void removeMedia(Media media) {
 		if (media == null) {
 			throw new NullPointerException("The input media is null");
 		} else if (!itemsInStore.contains(media)){

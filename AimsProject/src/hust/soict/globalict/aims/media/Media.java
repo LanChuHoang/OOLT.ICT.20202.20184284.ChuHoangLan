@@ -3,6 +3,8 @@ package hust.soict.globalict.aims.media;
 import java.time.LocalDate;
 import java.util.Comparator;
 
+import javax.naming.LimitExceededException;
+
 abstract public class Media implements Comparable<Media> {
 	public static final Comparator<Media> COMPARE_BY_TITLE_COST = Comparator.comparing(Media::getTitle).thenComparing(Media::getCost);
 	public static final Comparator<Media> COMPARE_BY_COST_TITLE = Comparator.comparing(Media::getCost).thenComparing(Media::getTitle);
@@ -65,6 +67,13 @@ abstract public class Media implements Comparable<Media> {
 	// Override methods
 	@Override
 	public boolean equals(Object obj) {
+// 		The answer for topic 4:
+//		if (obj == null) {
+//			throw new NullPointerException("Input object is null");
+//		}
+// 		I comment it out because when we select a row in a cart screen on the first time, the oldvalue parameter in the changed method of ChangeListener is null,
+// 		and something called the method media.equals and passing the oldvalue(is null at this time) so the method thrown 
+// 		a NullPointerException. I thing the tableview called this method.
 		if (obj instanceof Media) {
 			Media downcastedObj = (Media) obj;
 			return this.id == downcastedObj.getId();
@@ -85,9 +94,11 @@ abstract public class Media implements Comparable<Media> {
 	// Others
 	
 	// Checking
+	
 	public boolean idContains(String key) {
 		return Integer.toString(id).contains(key);
 	}
+	
 	
 	public boolean titleContains(String words) {
 		if (words == null || title == null) {
@@ -110,8 +121,12 @@ abstract public class Media implements Comparable<Media> {
 	}
 	
 	// Implement Comparable
+	
 	@Override
 	public int compareTo(Media o) {
+		if (o == null) {
+			throw new NullPointerException("Input object is null");
+		}
 		int compareTitleResult = title.compareTo(o.getTitle());
 		if (compareTitleResult == 0) {
 			return category.compareTo(o.getCategory());
