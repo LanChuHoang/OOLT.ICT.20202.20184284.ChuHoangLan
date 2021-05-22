@@ -4,6 +4,7 @@ package hust.soict.globalict.aims.screen.cart;
 import java.util.function.Predicate;
 
 import hust.soict.globalict.aims.cart.Cart;
+import hust.soict.globalict.aims.exception.PlayerException;
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
 import hust.soict.globalict.aims.screen.MainFrame;
@@ -218,7 +219,11 @@ public class CartScreenController {
 	void playButtonPressed(ActionEvent event) {
 		Media selectedItem = cartTableView.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
-			((Playable)selectedItem).play();
+			try {
+				((Playable)selectedItem).play();
+			} catch (PlayerException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -39,7 +39,11 @@ public class Aims {
 		cd1.addTrack(song1, song2);
 		// Add the items to the store
 		Media[] newMedia = {book3, book2, book1, book4, book5, book6, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
-		cart.addMedia(newMedia);
+		try {
+			cart.addMedia(newMedia);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		store.addMedia(newMedia);
 	}
 	
@@ -54,134 +58,5 @@ public class Aims {
 		storeWindow.setVisible(true);
 	}
 		
-
-	// CART MENU
-	public static void printCartMenu() {
-		System.out.println("----------------------------------CART---------------------------------");
-		cart.printCart();
-		System.out.println("Options: ");
-		System.out.println("1. Filter items in cart");
-		System.out.println("2. Sort items in cart");
-		System.out.println("3. Remove an item from cart");
-		System.out.println("4. Play an item");
-		System.out.println("5. Get lucky item from cart");
-		System.out.println("6. Place order");
-		System.out.println("0. Exit");
-		System.out.println("-----------------------------------------------------------------------");
-		System.out.println("\tYour choice: ");
-	}
-	
-	public static void cartMenu(Store store, Cart cart) {
-		Scanner sc = new Scanner(System.in);
-		char choice;
-		do {
-			// Print Menu
-			printCartMenu();
-			// Choice
-			choice = sc.next().charAt(0);
-			switch (choice) {
-			case '1': {
-				filterCartMenu(cart);
-				break;
-			}
-			case '2': {
-				sortCartMenu(cart);
-				break;
-			}
-			case '3': {
-				int id = getInputID();
-				cart.removeMedia(id);
-				break;
-			}
-			case '4': {
-				int chosenID = getInputID();
-				Media chosenItem = cart.searchByID(chosenID);
-				if (chosenItem == null) {
-					System.out.println("Cannot found");
-				} else if (chosenItem instanceof Playable) {
-					((Playable) chosenItem).play();
-				} else {
-					System.out.println("This item is not playable");
-				}
-				break;
-			}
-			case '5': {
-				cart.getLuckyItem();
-				break;
-			}
-			case '6': {
-				System.out.println("Your order has been created");
-				cart.emptyCart();
-				break;
-			}
-			case '0': {
-				break;
-			}
-			default:
-				System.out.println("\tInvalid");
-			}
-		} while(choice != '0');
-	}
-	
-	public static void filterCartMenu(Cart cart) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("1. Filter by ID");
-		System.out.println("2. Filter by title");
-		char choice = sc.next().charAt(0);
-		switch (choice) {
-		case '1': {
-			int id = getInputID();
-			Media searchItem = cart.searchByID(id);
-			if(searchItem == null) {
-				System.out.println("Cannot found");
-			} else {
-				System.out.println(searchItem.toString());
-			}
-			break;
-		}
-		case '2': {
-			System.out.println("Enter title");
-			sc.nextLine();
-			String title = sc.nextLine();
-			cart.searchByTitleFor(title);
-			break;
-		}
-		default:
-			System.out.println("\tInvalid");
-		}
-	}	
-	
-	public static void sortCartMenu(Cart cart) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("1. Sort by title");
-		System.out.println("2. Sort by cost");
-		char chosen = sc.next().charAt(0);
-		switch (chosen) {
-		case '1': {
-			System.out.println("Sort by title and cost: ");
-			cart.sortByTitleAndCost();
-			cart.printCart();
-			break;
-		}
-		case '2': {
-			System.out.println("Sort by cost and title: ");
-			cart.sortByCostAndTitle();
-			cart.printCart();
-			break;
-		}
-		default:
-			System.out.println("\tInvalid");
-		}
-	}
-	
-	
-	//
-	//
-	public static int getInputID() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter ID: ");
-		int inputID = sc.nextInt();
-		return inputID;
-	}
 
 }

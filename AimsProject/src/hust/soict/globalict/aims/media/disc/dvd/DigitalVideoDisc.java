@@ -7,8 +7,10 @@ import java.awt.Label;
 
 import javax.swing.JDialog;
 
+import hust.soict.globalict.aims.exception.PlayerException;
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.disc.Disc;
+
 
 public class DigitalVideoDisc extends Disc implements Playable{
 	
@@ -51,21 +53,25 @@ public class DigitalVideoDisc extends Disc implements Playable{
 	
 	// Implement Playable
 	@Override
-	public void play() {
-		JDialog playDVD = new JDialog();
-		playDVD.setTitle("Play DVD");
-		playDVD.setLayout(new GridBagLayout());
-		GridBagConstraints contraints = new GridBagConstraints();
-		contraints.insets = new Insets(0, 30, 0, 0);
-		contraints.anchor = GridBagConstraints.LINE_START;
-		
-		contraints.gridx = 0;contraints.gridy = 0;playDVD.add(new Label("Playing"), contraints);
-		contraints.gridx = 1;contraints.gridy = 0;playDVD.add(new Label("\""+getTitle()+"\""), contraints);
-		contraints.gridx = 0;contraints.gridy = 1;playDVD.add(new Label("Length "), contraints);
-		contraints.gridx = 1;contraints.gridy = 1;playDVD.add(new Label(getLength()+""), contraints);
-		playDVD.setBounds(500, 300, 300, 150);
-		playDVD.setAlwaysOnTop(true);
-		playDVD.setVisible(true);
+	public void play() throws PlayerException {
+		if (this.getLength() > 0) {
+			JDialog playDVD = new JDialog();
+			playDVD.setTitle("Play DVD");
+			playDVD.setLayout(new GridBagLayout());
+			GridBagConstraints contraints = new GridBagConstraints();
+			contraints.insets = new Insets(0, 30, 0, 0);
+			contraints.anchor = GridBagConstraints.LINE_START;
+			
+			contraints.gridx = 0;contraints.gridy = 0;playDVD.add(new Label("Playing"), contraints);
+			contraints.gridx = 1;contraints.gridy = 0;playDVD.add(new Label("\""+getTitle()+"\""), contraints);
+			contraints.gridx = 0;contraints.gridy = 1;playDVD.add(new Label("Length "), contraints);
+			contraints.gridx = 1;contraints.gridy = 1;playDVD.add(new Label(getLength()+""), contraints);
+			playDVD.setBounds(500, 300, 300, 150);
+			playDVD.setAlwaysOnTop(true);
+			playDVD.setVisible(true);
+		} else {
+			throw new PlayerException("ERROR: DVD "+ getTitle() +" has a non-positive length!");
+		}
 	}
 
 	

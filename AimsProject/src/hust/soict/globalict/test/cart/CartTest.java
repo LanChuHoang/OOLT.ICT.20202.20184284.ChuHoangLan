@@ -19,8 +19,11 @@ public class CartTest {
 		DigitalVideoDisc[] dvdList = {dvd1, dvd2, dvd3, dvd4, dvd5, dvd6};
 		
 		// Add DVDs to the cart
-		anOrder.addMedia(dvdList);
-		
+		try {
+			anOrder.addMedia(dvdList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// Print
 		anOrder.printCart();
 		

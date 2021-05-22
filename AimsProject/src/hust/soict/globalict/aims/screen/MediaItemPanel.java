@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import hust.soict.globalict.aims.cart.Cart;
+import hust.soict.globalict.aims.exception.PlayerException;
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Media;
 
@@ -56,7 +57,11 @@ public class MediaItemPanel extends JPanel{
 					label.setText("The item is already in your cart");
 				} else {
 					label.setText("The media " + media.getTitle() + " has been added to your cart !");
-					cart.addMedia(media);
+					try {
+						cart.addMedia(media);
+					} catch (Exception addToCartException) {
+						addToCartException.printStackTrace();
+					}
 				}
 				dialog.add(label);
 				dialog.setSize(new Dimension(300, 200));
@@ -71,11 +76,14 @@ public class MediaItemPanel extends JPanel{
 			// Play button
 			JButton playButton = new JButton("Play");
 			playButton.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					((Playable) media).play();
+					try {
+						((Playable) media).play();
+					} catch (PlayerException exception) {
+						exception.printStackTrace();
+					}
 				}
 			});
 			choicePanel.add(playButton);

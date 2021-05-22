@@ -30,7 +30,11 @@ public class StoreScreenTest {
 		// Add the items to the store
 		Media[] newMedia = {book3, book2, book1, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
 		store.addMedia(newMedia);
-		cart.addMedia(newMedia);
+		try {
+			cart.addMedia(newMedia);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {

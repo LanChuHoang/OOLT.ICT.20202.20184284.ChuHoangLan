@@ -17,7 +17,11 @@ public class DiskTest {
 		DigitalVideoDisc[] dvdList = {dvd1, dvd2, dvd3};
 		
 		// Add DVDs to the cart
-		anOrder.addMedia(dvdList);
+		try {
+			anOrder.addMedia(dvdList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		// Test
 		String key = "lion";

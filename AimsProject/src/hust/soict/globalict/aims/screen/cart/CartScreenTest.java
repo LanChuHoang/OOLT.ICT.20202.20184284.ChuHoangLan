@@ -33,7 +33,11 @@ public class CartScreenTest {
 		cd1.addTrack(song1, song2);
 		// Add the items to the store
 		Media[] newMedia = {book3, book2, book1, book4, book5, book6, dvd3, dvd2, dvd1, cd3, cd2, cd1}; 
-		cart.addMedia(newMedia);
+		try {
+			cart.addMedia(newMedia);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		store.addMedia(newMedia);
 	}
 	

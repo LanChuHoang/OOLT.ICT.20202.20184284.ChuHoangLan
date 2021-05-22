@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JDialog;
 
+import hust.soict.globalict.aims.exception.PlayerException;
 import hust.soict.globalict.aims.interfaces.Playable;
 import hust.soict.globalict.aims.media.Track;
 import hust.soict.globalict.aims.media.disc.Disc;
@@ -80,32 +81,44 @@ public class CompactDisc extends Disc implements Playable{
 	
 	// Implement Playable
 	@Override
-	public void play() {
-		JDialog playCD = new JDialog();
-		playCD.setTitle("Play CD");
-		playCD.setLayout(new GridBagLayout());
-		GridBagConstraints contraints = new GridBagConstraints();
-		contraints.insets = new Insets(0, 30, 0, 0);
-		contraints.anchor = GridBagConstraints.LINE_START;
-		
-		contraints.gridx = 0;contraints.gridy = 0;playCD.add(new Label("Playing"), contraints);
-		contraints.gridx = 1;contraints.gridy = 0;playCD.add(new Label("\""+getTitle()+"\""), contraints);
-		contraints.gridx = 0;contraints.gridy = 1;playCD.add(new Label("Total length "), contraints);
-		contraints.gridx = 1;contraints.gridy = 1;playCD.add(new Label(getLength()+""), contraints);
-		
-		if(!tracks.isEmpty()) {
-			contraints.gridx = 0;contraints.gridy = 2;playCD.add(new Label("Tracks:"), contraints);
-			int row = 3;
-			for(Track track : tracks) {
-				contraints.gridx = 0;contraints.gridy = row;playCD.add(new Label(" - \""+track.getTitle()+"\""), contraints);
-				contraints.gridx = 1;contraints.gridy = row;playCD.add(new Label(track.getLength() + ""), contraints);
-				row++;
+	public void play() throws PlayerException {
+		if (this.getLength() > 0) {
+			JDialog playCD = new JDialog();
+			playCD.setTitle("Play CD");
+			playCD.setLayout(new GridBagLayout());
+			GridBagConstraints contraints = new GridBagConstraints();
+			contraints.insets = new Insets(0, 30, 0, 0);
+			contraints.anchor = GridBagConstraints.LINE_START;
+			
+			contraints.gridx = 0;contraints.gridy = 0;playCD.add(new Label("Playing"), contraints);
+			contraints.gridx = 1;contraints.gridy = 0;playCD.add(new Label("\""+getTitle()+"\""), contraints);
+			contraints.gridx = 0;contraints.gridy = 1;playCD.add(new Label("Total length "), contraints);
+			contraints.gridx = 1;contraints.gridy = 1;playCD.add(new Label(getLength()+""), contraints);
+			
+			if(!tracks.isEmpty()) {
+				contraints.gridx = 0;contraints.gridy = 2;playCD.add(new Label("Tracks:"), contraints);
+				int row = 3;
+				for(Track track : tracks) {
+					contraints.gridx = 0;contraints.gridy = row;playCD.add(new Label(" - \""+track.getTitle()+"\""), contraints);
+					contraints.gridx = 1;contraints.gridy = row;playCD.add(new Label(track.getLength() + ""), contraints);
+					row++;
+				}
 			}
+			
+			playCD.setBounds(500, 300, 300, 150);
+			playCD.setAlwaysOnTop(true);
+			playCD.setVisible(true);
+			
+			for (Track track : tracks) {
+				try {
+					track.play();
+				} catch (PlayerException e) {
+					throw e;
+				}
+			}
+		} else {
+			throw new PlayerException("ERROR: CD "+ getTitle() +" has a non-positive length!");
 		}
-		
-		playCD.setBounds(500, 300, 300, 150);
-		playCD.setAlwaysOnTop(true);
-		playCD.setVisible(true);
 	}
 	
 	
